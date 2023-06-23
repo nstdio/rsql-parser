@@ -1,5 +1,3 @@
-import ca.coglinc.gradle.plugins.javacc.CompileJavaccTask
-
 plugins {
   groovy
   jacoco
@@ -147,15 +145,8 @@ tasks {
     isReproducibleFileOrder = true
   }
 
-  withType<CompileJavaccTask>().configureEach {
-    val initial = outputDirectory
-    outputDirectory = initial.resolve("cz/jirutka/rsql/parser")
-
-    sourceSets.main {
-      java {
-        srcDir(initial)
-      }
-    }
+  compileJavacc {
+    outputDirectory = outputDirectory.resolve("cz/jirutka/rsql/parser")
   }
 
   named("afterReleaseBuild") {
