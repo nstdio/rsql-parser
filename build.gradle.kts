@@ -21,6 +21,8 @@ dependencies {
 
   testImplementation("org.spockframework:spock-core:2.4-M1-groovy-4.0")
   testRuntimeOnly("net.bytebuddy:byte-buddy:1.14.5")
+
+  javacc("net.java.dev.javacc:javacc:7.0.12")
 }
 
 group = "io.github.nstdio"
