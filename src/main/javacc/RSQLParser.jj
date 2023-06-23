@@ -55,16 +55,19 @@ final class Parser {
     }
 
     private String unescape(String s) {
-        if (s.indexOf('\\') < 0) {
+        final int start = s.indexOf('\\');
+        if (start < 0) {
             return s;
         }
-        final StringBuilder sb = new StringBuilder(s.length());
+        final int len = s.length();
+        final StringBuilder sb = new StringBuilder(len);
+        sb.append(s, 0, start);
 
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = start; i < len; i++) {
             if (s.charAt(i) == '\\') {
                 i++;
             }
-            if (i < s.length()) {
+            if (i < len) {
                 sb.append(s.charAt(i));
             }
         }
