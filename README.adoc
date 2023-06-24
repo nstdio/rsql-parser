@@ -1,7 +1,7 @@
 = RSQL / FIQL parser
 Jakub Jirutka <https://github.com/jirutka[@jirutka]>
 :name: rsql-parser
-:version: 2.1.0
+:version: 2.1.2
 :mvn-group: io.github.nstdio
 :gh-name: nstdio/{name}
 :gh-branch: master
@@ -159,6 +159,13 @@ Node rootNode = new RSQLParser(operators).parse("genres=all=('thriller','sci-fi'
 Released versions are available in The Central Repository.
 Just add this artifact to your project:
 
+=== Gradle
+[source, kotlin, subs="verbatim, attributes"]
+----
+implementation("{mvn-group}:{name}:{version}")
+----
+
+=== Maven
 [source, xml, subs="verbatim, attributes"]
 ----
 <dependency>
