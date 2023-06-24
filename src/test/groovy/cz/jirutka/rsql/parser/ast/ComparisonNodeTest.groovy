@@ -23,6 +23,7 @@
  */
 package cz.jirutka.rsql.parser.ast
 
+import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
 import static cz.jirutka.rsql.parser.ast.RSQLOperators.*
@@ -58,5 +59,12 @@ class ComparisonNodeTest extends Specification {
             args << 'horror'
         then: "node's arguments remains unchanged"
             node.getArguments() == ['thriller', 'sci-fi']
+    }
+
+    def 'should honor equal and hashcode contracts'() {
+        expect:
+        EqualsVerifier.forClass(ComparisonNode)
+            .withNonnullFields('operator', 'selector', 'arguments')
+            .verify()
     }
 }
