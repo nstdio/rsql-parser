@@ -22,7 +22,6 @@ dependencies {
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 
   testImplementation("org.spockframework:spock-core:2.4-M1-groovy-4.0")
-  testRuntimeOnly("net.bytebuddy:byte-buddy:1.14.5")
 
   javacc("net.java.dev.javacc:javacc:7.0.12")
 }
