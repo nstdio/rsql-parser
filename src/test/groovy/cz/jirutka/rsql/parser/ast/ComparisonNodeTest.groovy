@@ -61,6 +61,17 @@ class ComparisonNodeTest extends Specification {
             node.getArguments() == ['thriller', 'sci-fi']
     }
 
+    def 'should create proper toString representation'() {
+        expect:
+        node.toString() == expected
+
+        where:
+        node                                                               | expected
+        new ComparisonNode(IN, 'genres', ['thriller', 'sci-fi', 'comedy']) | "genres=in=('thriller','sci-fi','comedy')"
+        new ComparisonNode(IN, 'genres', ['thriller'])                     | "genres=in=('thriller')"
+        new ComparisonNode(EQUAL, 'genres', ['thriller'])                  | "genres=='thriller'"
+    }
+
     def 'should honor equal and hashcode contracts'() {
         expect:
         EqualsVerifier.forClass(ComparisonNode)

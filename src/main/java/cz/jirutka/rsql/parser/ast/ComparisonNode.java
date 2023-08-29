@@ -43,7 +43,6 @@ public final class ComparisonNode extends AbstractNode {
 
     private final List<String> arguments;
 
-
     /**
      * @param operator  Must not be <tt>null</tt>.
      * @param selector  Must not be <tt>null</tt> or blank.
@@ -63,7 +62,6 @@ public final class ComparisonNode extends AbstractNode {
         this.selector = selector;
         this.arguments = new ArrayList<>(arguments);
     }
-
 
     public <R, A> R accept(RSQLVisitor<R, A> visitor, A param) {
         return visitor.visit(this, param);
@@ -120,11 +118,10 @@ public final class ComparisonNode extends AbstractNode {
         return new ComparisonNode(operator, selector, newArguments);
     }
 
-
     @Override
     public String toString() {
-        String args = arguments.size() > 1
-                ? "('" + join(arguments, "','") + "')"
+        String args = operator.isMultiValue()
+                ? join(arguments, "','", "('", "')")
                 : "'" + arguments.get(0) + "'";
         return selector + operator + args;
     }

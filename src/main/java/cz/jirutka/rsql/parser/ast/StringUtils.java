@@ -24,16 +24,17 @@
 package cz.jirutka.rsql.parser.ast;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 abstract class StringUtils {
 
-    public static String join(List<?> list, String glue) {
+    public static String join(List<?> list, String delimiter, String prefix, String suffix) {
+        StringJoiner joiner = new StringJoiner(delimiter, prefix, suffix);
 
-        StringBuilder line = new StringBuilder();
         for (Object s : list) {
-            line.append(s).append(glue);
+            joiner.add(String.valueOf(s));
         }
-        return list.isEmpty() ? "" : line.substring(0, line.length() - glue.length());
+        return joiner.toString();
     }
 
     public static boolean isBlank(String str) {

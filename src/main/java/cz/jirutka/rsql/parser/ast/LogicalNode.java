@@ -86,7 +86,7 @@ public abstract class LogicalNode extends AbstractNode implements Iterable<Node>
 
     @Override
     public String toString() {
-        return "(" + join(children, operator.toString()) + ")";
+        return join(children, operator.toString(), "(", ")");
     }
 
     @Override
