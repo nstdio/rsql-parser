@@ -24,6 +24,7 @@
 package cz.jirutka.rsql.parser.ast;
 
 import cz.jirutka.rsql.parser.UnknownOperatorException;
+import java.util.Arrays;
 import net.jcip.annotations.Immutable;
 
 import java.util.HashMap;
@@ -45,7 +46,16 @@ public class NodesFactory {
         comparisonOperators = new HashMap<>(operators.size());
         for (ComparisonOperator op : operators) {
             for (String sym : op.getSymbols()) {
-                comparisonOperators.put(sym, op);
+                ComparisonOperator prevOp = comparisonOperators.put(sym, op);
+
+                if (prevOp != null && prevOp != op) {
+                    throw new IllegalArgumentException(String.format(
+                        "ComparisonOperator%s might shadow ComparisonOperator%s because they have common symbol '%s'",
+                        Arrays.toString(op.getSymbols()),
+                        Arrays.toString(prevOp.getSymbols()),
+                        sym
+                    ));
+                }
             }
         }
     }

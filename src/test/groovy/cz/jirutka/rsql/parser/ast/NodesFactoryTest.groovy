@@ -71,4 +71,31 @@ class NodesFactoryTest extends Specification {
         then:
             thrown UnknownOperatorException
     }
+
+    def 'create ComparisonNode when operator identical symbols'() {
+        given:
+        def operators = [new ComparisonOperator("=a=", "=a=")] as Set
+        def factory = new NodesFactory(operators)
+
+        when:
+        def node = factory.createComparisonNode('=a=', 'sel', ['arg'])
+
+        then:
+        node.operator == operators[0]
+    }
+
+    def 'throw IllegalArgumentException when symbols overlap'() {
+        when:
+        new NodesFactory(operators as Set)
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.getMessage() == expected
+
+        where:
+        operators                                                                    | expected
+        [new ComparisonOperator("=a=", "=b="), new ComparisonOperator("=b=")]        | 'ComparisonOperator[=b=] might shadow ComparisonOperator[=a=, =b=] because they have common symbol \'=b=\''
+        [new ComparisonOperator("=a=", "=b="), new ComparisonOperator("=b=", "=c=")] | 'ComparisonOperator[=b=, =c=] might shadow ComparisonOperator[=a=, =b=] because they have common symbol \'=b=\''
+        [new ComparisonOperator("=a=", "=c="), new ComparisonOperator("=b=", "=c=")] | 'ComparisonOperator[=b=, =c=] might shadow ComparisonOperator[=a=, =c=] because they have common symbol \'=c=\''
+    }
 }
