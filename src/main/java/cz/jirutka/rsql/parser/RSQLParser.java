@@ -114,7 +114,6 @@ public final class RSQLParser {
         try (Reader reader = new StringReader(query)) {
             Parser parser = new Parser(reader, nodesFactory);
             return parser.Input();
-
         } catch (Exception | TokenMgrError ex) {
             throw new RSQLParserException(ex);
         }

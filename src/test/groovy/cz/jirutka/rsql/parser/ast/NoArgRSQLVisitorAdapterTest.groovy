@@ -33,7 +33,7 @@ class NoArgRSQLVisitorAdapterTest extends Specification {
         setup:
             def node = LogicalNode.isAssignableFrom(nodeClass) ?
                     nodeClass.newInstance([]) :
-                    nodeClass.newInstance(RSQLOperators.EQUAL, 'sel', ['arg'])
+                    nodeClass.newInstance(RSQLOperators.EQUAL, 'sel', new StringArguments('arg'))
         and:
             def adapter = Spy(NoArgRSQLVisitorAdapter) {
                 visit(_) >> null

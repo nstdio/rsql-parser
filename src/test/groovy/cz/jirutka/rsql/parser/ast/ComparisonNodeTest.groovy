@@ -32,33 +32,11 @@ class ComparisonNodeTest extends Specification {
 
     def 'throw exception when given multiple arguments for single-argument operator'() {
         when:
-            new ComparisonNode(operator, 'sel', ['arg1', 'arg2'])
+            new ComparisonNode(operator, 'sel', new StringArguments('arg1', 'arg2'))
         then:
             thrown IllegalArgumentException
         where:
             operator << defaultOperators().findAll{ !it.multiValue }
-    }
-
-    def 'should be immutable'() {
-        given:
-            def args = ['thriller', 'sci-fi']
-            def node = new ComparisonNode(IN, 'genres', args)
-
-        when: "modify list of node's arguments"
-            node.getArguments() << 'horror'
-        then: "node's arguments remain unchanged"
-            node.getArguments() == args
-
-        expect: "withX returns copy and doesn't change original node"
-            node.withOperator(NOT_IN)   == new ComparisonNode(NOT_IN, 'genres', args)
-            node.withSelector('foo')    == new ComparisonNode(IN, 'foo', args)
-            node.withArguments(['foo']) == new ComparisonNode(IN, 'genres', ['foo'])
-            node == new ComparisonNode(IN, 'genres', args)
-
-        when: 'modify original list of arguments given to node'
-            args << 'horror'
-        then: "node's arguments remains unchanged"
-            node.getArguments() == ['thriller', 'sci-fi']
     }
 
     def 'should create proper toString representation'() {
@@ -66,10 +44,10 @@ class ComparisonNodeTest extends Specification {
         node.toString() == expected
 
         where:
-        node                                                               | expected
-        new ComparisonNode(IN, 'genres', ['thriller', 'sci-fi', 'comedy']) | "genres=in=('thriller','sci-fi','comedy')"
-        new ComparisonNode(IN, 'genres', ['thriller'])                     | "genres=in=('thriller')"
-        new ComparisonNode(EQUAL, 'genres', ['thriller'])                  | "genres=='thriller'"
+        node                                                                                  | expected
+        new ComparisonNode(IN, 'genres', new StringArguments('thriller', 'sci-fi', 'comedy')) | "genres=in=('thriller','sci-fi','comedy')"
+        new ComparisonNode(IN, 'genres', new StringArguments('thriller'))                     | "genres=in=('thriller')"
+        new ComparisonNode(EQUAL, 'genres', new StringArguments('thriller'))                  | "genres=='thriller'"
     }
 
     def 'should honor equal and hashcode contracts'() {

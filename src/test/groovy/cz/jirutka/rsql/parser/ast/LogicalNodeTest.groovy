@@ -36,7 +36,7 @@ abstract class LogicalNodeTest extends Specification {
 
     def 'should be immutable'() {
         given:
-            def child1 = new ComparisonNode(EQUAL, 'foo', ['bar'])
+            def child1 = new ComparisonNode(EQUAL, 'foo', new StringArguments('bar'))
             def child2 = new AndNode([])
             def children = [child1, child2]
             def node = newNode(children)

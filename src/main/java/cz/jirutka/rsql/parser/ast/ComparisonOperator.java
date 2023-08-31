@@ -36,56 +36,56 @@ public final class ComparisonOperator {
 
     private final String[] symbols;
 
-    private final boolean multiValue;
+    private final Type type;
 
 
     /**
      * @param symbols    Textual representation of this operator (e.g. <tt>=gt=</tt>); the first item
      *                   is primary representation, any others are alternatives. Must match
      *                   {@literal =[a-zA-Z]*=|[><]=?|!=}.
-     * @param multiValue Whether this operator may be used with multiple arguments. This is then
-     *                   validated in {@link NodesFactory}.
+     * @param type       Whether this operator may be used with multiple or nested arguments. This is 
+     *                   then validated in {@link NodesFactory}.
      * @throws IllegalArgumentException If the {@code symbols} is either <tt>null</tt>, empty,
      *                                  or contain illegal symbols.
      */
-    public ComparisonOperator(String[] symbols, boolean multiValue) {
+    public ComparisonOperator(String[] symbols, Type type) {
         Assert.notEmpty(symbols, "symbols must not be null or empty");
         for (String sym : symbols) {
             Assert.isTrue(isValidOperatorSymbol(sym), "symbol must match: %s", SYMBOL_PATTERN);
         }
-        this.multiValue = multiValue;
+        this.type = type;
         this.symbols = symbols.clone();
     }
 
     /**
      * @param symbol     Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
      *                   {@literal =[a-zA-Z]*=|[><]=?|!=}.
-     * @param multiValue Whether this operator may be used with multiple arguments. This is then
-     *                   validated in {@link NodesFactory}.
-     * @see #ComparisonOperator(String[], boolean)
+     * @param type       Whether this operator may be used with multiple or nested arguments. This
+     *                   is then validated in {@link NodesFactory}.
+     * @see #ComparisonOperator(String[], Type)
      */
-    public ComparisonOperator(String symbol, boolean multiValue) {
-        this(new String[]{symbol}, multiValue);
+    public ComparisonOperator(String symbol, Type type) {
+        this(new String[]{symbol}, type);
     }
 
     /**
      * @param symbol     Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
      *                   {@literal =[a-zA-Z]*=|[><]=?|!=}.
      * @param altSymbol  Alternative representation for {@code symbol}.
-     * @param multiValue Whether this operator may be used with multiple arguments. This is then
-     * @see #ComparisonOperator(String[], boolean)
+     * @param type       Whether this operator may be used with multiple or nested arguments.
+     * @see #ComparisonOperator(String[], Type)
      */
-    public ComparisonOperator(String symbol, String altSymbol, boolean multiValue) {
-        this(new String[]{symbol, altSymbol}, multiValue);
+    public ComparisonOperator(String symbol, String altSymbol, Type type) {
+        this(new String[]{symbol, altSymbol}, type);
     }
 
     /**
      * @param symbols Textual representation of this operator (e.g. <tt>=gt=</tt>); the first item
      *                is primary representation, any others are alternatives. Must match {@literal =[a-zA-Z]*=|[><]=?|!=}.
-     * @see #ComparisonOperator(String[], boolean)
+     * @see #ComparisonOperator(String[], Type)
      */
     public ComparisonOperator(String... symbols) {
-        this(symbols, false);
+        this(symbols, Type.SINGLE_VALUED);
     }
 
 
@@ -114,9 +114,15 @@ public final class ComparisonOperator {
      * @return Whether this operator may be used with multiple arguments.
      */
     public boolean isMultiValue() {
-        return multiValue;
+        return type == Type.MULTI_VALUED;
     }
-
+    
+    /**
+     * 
+     */
+    public Type getType() {
+        return type;
+    }
 
     /**
      * Whether the given string can represent an operator.
@@ -144,5 +150,9 @@ public final class ComparisonOperator {
     @Override
     public int hashCode() {
         return getSymbol().hashCode();
+    }
+    
+    public static enum Type {
+        SINGLE_VALUED, MULTI_VALUED, NESTED;
     }
 }

@@ -23,7 +23,7 @@
  */
 
 options {
-    LOOKAHEAD = 1;
+    LOOKAHEAD = 3;
     CHOICE_AMBIGUITY_CHECK = 3;
     OTHER_AMBIGUITY_CHECK = 2;
     STATIC = false;
@@ -170,7 +170,7 @@ ComparisonNode Comparison():
 {
     final String sel;
     final String op;
-    final List<String> args;
+    final Object args;
 }
 {
     ( sel = Selector() op = Operator() args = Arguments() )
@@ -195,14 +195,16 @@ String Operator(): {}
     }
 }
 
-List<String> Arguments():
+Object Arguments():
 {
     final Object value;
 }
 {
-    ( <LPAREN> value = CommaSepArguments() <RPAREN> ) { return (List) value; }
+    ( <LPAREN> value = Or() <RPAREN> ) { return value; }
     |
-    value = Argument() { return Arrays.asList((String) value); }
+    ( <LPAREN> value = CommaSepArguments() <RPAREN> ) { return value; }
+    |
+    value = Argument() { return value; }
 }
 
 List<String> CommaSepArguments():

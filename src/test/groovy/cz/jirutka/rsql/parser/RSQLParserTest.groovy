@@ -24,6 +24,7 @@
 package cz.jirutka.rsql.parser
 
 import cz.jirutka.rsql.parser.ast.*
+import cz.jirutka.rsql.parser.ast.NestedArguments
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -153,7 +154,7 @@ class RSQLParserTest extends Specification {
                 val[0] in ['"', "'"] ? val[1..-2] : val
             }
         expect:
-            parse("sel=in=(${input.join(',')})") == new ComparisonNode(IN, 'sel', values)
+            parse("sel=in=(${input.join(',')})") == new ComparisonNode(IN, 'sel', new StringArguments(values))
         where:
             input << [ ['chunky', 'bacon', '"ftw!"'], ["'hi!'", '"how\'re you?"'], ['meh'], ['")o("'] ]
     }
@@ -212,9 +213,9 @@ class RSQLParserTest extends Specification {
 
     def 'use parser with custom set of operators'() {
         setup:
-            def allOperator = new ComparisonOperator('=all=', true)
+            def allOperator = new ComparisonOperator('=all=', ComparisonOperator.Type.MULTI_VALUED)
             def parser = new RSQLParser([EQUAL, allOperator] as Set)
-            def expected = and(eq('name', 'TRON'), new ComparisonNode(allOperator, 'genres', ['sci-fi', 'thriller']))
+            def expected = and(eq('name', 'TRON'), new ComparisonNode(allOperator, 'genres', new StringArguments('sci-fi', 'thriller')))
 
         expect:
             parser.parse('name==TRON;genres=all=(sci-fi,thriller)') == expected
@@ -225,6 +226,17 @@ class RSQLParserTest extends Specification {
             def ex = thrown(RSQLParserException)
             ex.cause instanceof UnknownOperatorException
     }
+    
+    def 'use parser with custom nested operators'() {
+        setup:
+            def nestedOperator = new ComparisonOperator('=nested=', ComparisonOperator.Type.NESTED)
+            def nestedNode = new ComparisonNode(new ComparisonOperator("=="), "sci-fi", new StringArguments("true"));            
+            def parser = new RSQLParser([EQUAL, nestedOperator] as Set)
+            def expected = new ComparisonNode(nestedOperator, "genres", new NestedArguments(nestedNode));
+
+        expect:
+            parser.parse('genres=nested=(sci-fi==true)') == expected
+    }    
 
 
     //////// Helpers ////////
@@ -233,6 +245,6 @@ class RSQLParserTest extends Specification {
 
     def and(Node... nodes) { new AndNode(nodes as List) }
     def or(Node... nodes) { new OrNode(nodes as List) }
-    def eq(sel, arg) { new ComparisonNode(EQUAL, sel, [arg as String]) }
-    def out(sel, ...args) { new ComparisonNode(NOT_IN, sel, args as List) }
+    def eq(sel, arg) { new ComparisonNode(EQUAL, sel, new StringArguments(arg)) }
+    def out(sel, ...args) { new ComparisonNode(NOT_IN, sel, new StringArguments(args)) }
 }

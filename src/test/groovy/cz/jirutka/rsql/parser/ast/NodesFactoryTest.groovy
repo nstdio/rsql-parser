@@ -53,21 +53,21 @@ class NodesFactoryTest extends Specification {
 
     def 'create ComparisonNode when given supported operator token'() {
         when:
-            def node = factory.createComparisonNode(opToken, 'doctor', ['who?'])
+            def node = factory.createComparisonNode(opToken, 'doctor', 'who?')
         then:
             node.operator  == expected
             node.selector  == 'doctor'
-            node.arguments == ['who?']
+            node.arguments == new StringArguments('who?')
         where:
             opToken | expected
             '=='    | EQUAL
             '=gt='  | GREATER_THAN
             '>'     | GREATER_THAN
     }
-
+        
     def 'throw UnknownOperatorException when given unsupported operator token'() {
         when:
-            factory.createComparisonNode('=lt=', 'sel', ['arg'])
+            factory.createComparisonNode('=lt=', 'sel', new StringArguments('arg'))
         then:
             thrown UnknownOperatorException
     }

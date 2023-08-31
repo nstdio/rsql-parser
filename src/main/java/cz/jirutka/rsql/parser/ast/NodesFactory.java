@@ -91,14 +91,20 @@ public class NodesFactory {
      * @return a {@link ComparisonNode} instance with the given parameters.
      * @throws UnknownOperatorException If no operator for the specified operator token exists.
      */
-    public ComparisonNode createComparisonNode(
-        String operatorToken, String selector, List<String> arguments) throws UnknownOperatorException {
-
+    public ComparisonNode createComparisonNode(String operatorToken, String selector, Object arguments) throws UnknownOperatorException {
+        Assert.notNull(arguments, "arguments must not be null");
+        
         ComparisonOperator op = comparisonOperators.get(operatorToken);
-        if (op != null) {
-            return new ComparisonNode(op, selector, arguments);
-        } else {
+        if (op == null) {
             throw new UnknownOperatorException(operatorToken);
+        }
+        
+        if (arguments instanceof Node) {
+            return new ComparisonNode(op, selector, new NestedArguments((Node)arguments));
+        } else if (arguments instanceof List) {
+            return new ComparisonNode(op, selector, new StringArguments((List<String>)arguments));         
+        } else {
+            return new ComparisonNode(op, selector, new StringArguments((String)arguments));         
         }
     }
 }

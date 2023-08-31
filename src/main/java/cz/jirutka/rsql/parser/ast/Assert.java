@@ -32,7 +32,7 @@ abstract class Assert {
             throw new IllegalArgumentException(String.format(message, args));
         }
     }
-
+    
     public static void notNull(Object obj, String message, Object... args) {
         if (obj == null) {
             throw new IllegalArgumentException(String.format(message, args));
