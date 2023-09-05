@@ -57,7 +57,7 @@ class NodesFactoryTest extends Specification {
         then:
             node.operator  == expected
             node.selector  == 'doctor'
-            node.arguments == new StringArguments('who?')
+            node.arguments == ['who?']
         where:
             opToken | expected
             '=='    | EQUAL

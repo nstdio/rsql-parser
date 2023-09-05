@@ -37,8 +37,43 @@ public final class ComparisonOperator {
     private final String[] symbols;
 
     private final Type type;
+    
+    /**
+     * @param symbols    Textual representation of this operator (e.g. <tt>=gt=</tt>); the first item
+     *                   is primary representation, any others are alternatives. Must match
+     *                   {@literal =[a-zA-Z]*=|[><]=?|!=}.
+     * @param multiValue Whether this operator may be used with multiple arguments. This is then
+     *                   validated in {@link NodesFactory}.
+     * @throws IllegalArgumentException If the {@code symbols} is either <tt>null</tt>, empty,
+     *                                  or contain illegal symbols.
+     */
+    public ComparisonOperator(String[] symbols, boolean multiValue) {
+        this(symbols, (Type) (multiValue ? Type.MULTI_VALUED : Type.SINGLE_VALUED));
+    }    
 
-
+    /**
+     * @param symbol     Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
+     *                   {@literal =[a-zA-Z]*=|[><]=?|!=}.
+     * @param multiValue Whether this operator may be used with multiple arguments. This is then
+     *                   validated in {@link NodesFactory}.
+     * @see #ComparisonOperator(String[], boolean)
+     */
+    public ComparisonOperator(String symbol, boolean multiValue) {
+        this(new String[]{symbol}, multiValue);
+    }
+    
+    /**
+     * @param symbol     Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
+     *                   {@literal =[a-zA-Z]*=|[><]=?|!=}.
+     * @param altSymbol  Alternative representation for {@code symbol}.
+     * @param multiValue Whether this operator may be used with multiple arguments. This is then
+     * @see #ComparisonOperator(String[], boolean)
+     */
+    public ComparisonOperator(String symbol, String altSymbol, boolean multiValue) {
+        this(new String[]{symbol, altSymbol}, multiValue);
+    }    
+    
+    
     /**
      * @param symbols    Textual representation of this operator (e.g. <tt>=gt=</tt>); the first item
      *                   is primary representation, any others are alternatives. Must match
