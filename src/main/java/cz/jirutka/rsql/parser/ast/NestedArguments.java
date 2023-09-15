@@ -29,7 +29,7 @@ import java.util.Objects;
 import net.jcip.annotations.Immutable;
 
 /**
- *
+ * Class representing nested arguments in the RSQL grammar.
  */
 @Immutable
 public class NestedArguments implements ComparisonArguments {
@@ -41,6 +41,7 @@ public class NestedArguments implements ComparisonArguments {
         this.node = node;
     }
 
+    @Override
     public Node asNode() {
         return node;
     }

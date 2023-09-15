@@ -55,7 +55,7 @@ import java.util.Set;
  * comp-fiql      = ( ( "=", { ALPHA } ) | "!" ), "=";
  * comp-alt       = ( ">" | "<" ), [ "=" ];
  *
- * arguments      = ( "(", value, { "," , value }, ")" ) | value;
+ * arguments      = ( "(", value, { "," , value }, ")" ) | value | ( "(", comparison, { or, comparison }  ")" );
  * value          = unreserved-str | double-quoted | single-quoted;
  *
  * unreserved-str = unreserved, { unreserved }

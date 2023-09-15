@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 import net.jcip.annotations.Immutable;
 
 /**
- *
+ * Class representing string arguments in the RSQL grammar.
  */
 @Immutable
 public class StringArguments implements ComparisonArguments {
@@ -60,7 +60,7 @@ public class StringArguments implements ComparisonArguments {
     public Node asNode() {
         return null;
     }
-    
+
     @Override
     public String toString() {
         return arguments.stream().map(arg -> "'" + arg + "'").collect(Collectors.joining(","));

@@ -26,13 +26,25 @@ package cz.jirutka.rsql.parser.ast;
 import java.util.List;
 
 /**
- *
+ * Interface representing arguments in the RSQL grammar.
  */
 public interface ComparisonArguments {
-    
+
     boolean isNested();
-    
+
+    /**
+     * Returns arguments as a list of string, if {@link #isNested()} is true the
+     * list will be empty.
+     *
+     * @return a list of string arguments
+     */
     List<String> asStringList();
-    
-    Node asNode();    
+
+    /**
+     * Returns arguments as a node, if {@link #isNested()} is false this will
+     * return null.
+     *
+     * @return arguments as a node or null
+     */
+    Node asNode();
 }

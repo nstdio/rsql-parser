@@ -92,11 +92,14 @@ comp-fiql      = ( ( "=", { ALPHA } ) | "!" ), "=";
 comp-alt       = ( ">" | "<" ), [ "=" ];
 ----
 
-Argument can be a single value, or multiple values in parenthesis separated by comma.
+Argument can be a single value, multiple values in parenthesis separated by comma, or a nested query in parenthesis.
+
 Value that doesn’t contain any reserved character or a white space can be unquoted, other arguments must be enclosed in single or double quotes.
 
+Nested queries are not supported for any of the build ind comparison operators, but can be used when extending RSQL with custom operators.
+
 ----
-arguments      = ( "(", value, { "," , value }, ")" ) | value;
+arguments      = ( "(", value, { "," , value }, ")" ) | value | ( "(", comparison, { or, comparison }  ")" );
 value          = unreserved-str | double-quoted | single-quoted;
 
 unreserved-str = unreserved, { unreserved }

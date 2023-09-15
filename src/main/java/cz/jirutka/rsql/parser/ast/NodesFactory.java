@@ -87,9 +87,10 @@ public class NodesFactory {
      * @param operatorToken A textual representation of the comparison operator to be found in the
      *                      set of supported {@linkplain ComparisonOperator operators}.
      * @param selector      The selector that specifies the left side of the comparison.
-     * @param arguments     A list of arguments that specifies the right side of the comparison.
+     * @param arguments     The arguments that specifies the right side of the comparison.
      * @return a {@link ComparisonNode} instance with the given parameters.
      * @throws UnknownOperatorException If no operator for the specified operator token exists.
+     * @throws IllegalArgumentException If arguments are null or have wrong type
      */
     public ComparisonNode createComparisonNode(String operatorToken, String selector, Object arguments) throws UnknownOperatorException {
         Assert.notNull(arguments, "arguments must not be null");
@@ -103,8 +104,11 @@ public class NodesFactory {
             return new ComparisonNode(op, selector, new NestedArguments((Node)arguments));
         } else if (arguments instanceof List) {
             return new ComparisonNode(op, selector, new StringArguments((List<String>)arguments));         
-        } else {
+        } else if (arguments instanceof String) {
             return new ComparisonNode(op, selector, new StringArguments((String)arguments));         
+        } else {
+            // this normally can't happen
+            throw new IllegalArgumentException("arguments must be a node, a list of string or a string, but was: " + arguments.getClass());
         }
     }
 }
