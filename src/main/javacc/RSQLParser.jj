@@ -54,24 +54,26 @@ final class Parser {
         this.factory = factory;
     }
 
-    private String unescape(String s) {
-        final int start = s.indexOf('\\');
-        if (start < 0) {
-            return s;
-        }
-        final int len = s.length();
-        final StringBuilder sb = new StringBuilder(len);
-        sb.append(s, 0, start);
+    static String unescape(String s) {
+        int start = 1;
+        StringBuilder sb = null;
 
-        for (int i = start; i < len; i++) {
-            if (s.charAt(i) == '\\') {
-                i++;
+        for (int end; ; ) {
+            end = s.indexOf('\\', start != 1 ? start + 1 : start);
+
+            if (end < 0) {
+                return sb == null
+                    ? s.substring(start, s.length() - 1)
+                    : sb.append(s, start, s.length() - 1).toString();
             }
-            if (i < len) {
-                sb.append(s.charAt(i));
+
+            if (sb == null) {
+                sb = new StringBuilder(s.length() - 3);
             }
+
+            sb.append(s, start, end);
+            start = end + 1;
         }
-        return sb.toString();
     }
 }
 
@@ -227,6 +229,6 @@ String Argument(): {}
     |
     ( token = <DOUBLE_QUOTED_STR> | token = <SINGLE_QUOTED_STR> )
     {
-        return unescape(token.image.substring(1, token.image.length() -1));
+        return unescape(token.image);
     }
 }
