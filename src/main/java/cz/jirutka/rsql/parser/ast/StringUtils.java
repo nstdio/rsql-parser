@@ -38,6 +38,22 @@ abstract class StringUtils {
     }
 
     public static boolean isBlank(String str) {
-        return str == null || str.trim().isEmpty();
+        return str == null || (indexOfNonWhitespace(str) == str.length());
+    }
+
+    /**
+     * Copied from JDK 20
+     */
+    private static int indexOfNonWhitespace(String s) {
+        int length = s.length() >> 1;
+        int left = 0;
+        while (left < length) {
+            int codepoint = s.codePointAt(left);
+            if (codepoint != ' ' && codepoint != '\t' && !Character.isWhitespace(codepoint)) {
+                break;
+            }
+            left += Character.charCount(codepoint);
+        }
+        return left;
     }
 }

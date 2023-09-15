@@ -40,7 +40,7 @@ class ComparisonOperatorTest extends Specification {
         then:
             thrown IllegalArgumentException
         where:
-            sym << [null, '', 'foo', '=123=', '=', '=<', '=>', '=!', 'a=b=c']
+            sym << [null, '', ' ', 'foo', '=123=', '=', '=<', '=>', '=!', 'a=b=c']
     }
 
     def 'equals when contains same symbols'() {
