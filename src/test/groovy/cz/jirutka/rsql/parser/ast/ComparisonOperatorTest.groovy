@@ -47,4 +47,13 @@ class ComparisonOperatorTest extends Specification {
         expect:
             new ComparisonOperator('=out=', '=notin=') == new ComparisonOperator('=out=', '=notin=', true)
     }
+
+    def 'should create with varargs'() {
+        given:
+        def operator = new ComparisonOperator("=a=", "=b=", "=c=", "=d=")
+
+        expect:
+        !operator.isMultiValue()
+        operator.symbols == new String[]{"=a=", "=b=", "=c=", "=d="}
+    }
 }
