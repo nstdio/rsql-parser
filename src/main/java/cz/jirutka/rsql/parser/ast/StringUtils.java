@@ -45,14 +45,14 @@ abstract class StringUtils {
      * Copied from JDK 20
      */
     private static int indexOfNonWhitespace(String s) {
-        int length = s.length() >> 1;
+        int length = s.length();
         int left = 0;
         while (left < length) {
-            int codepoint = s.codePointAt(left);
-            if (codepoint != ' ' && codepoint != '\t' && !Character.isWhitespace(codepoint)) {
+            char ch = s.charAt(left);
+            if (ch != ' ' && ch != '\t' && !Character.isWhitespace(ch)) {
                 break;
             }
-            left += Character.charCount(codepoint);
+            left++;
         }
         return left;
     }
