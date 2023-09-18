@@ -40,11 +40,20 @@ class ComparisonOperatorTest extends Specification {
         then:
             thrown IllegalArgumentException
         where:
-            sym << [null, '', 'foo', '=123=', '=', '=<', '=>', '=!', 'a=b=c']
+            sym << [null, '', ' ', 'foo', '=123=', '=', '=<', '=>', '=!', 'a=b=c']
     }
 
     def 'equals when contains same symbols'() {
         expect:
         new ComparisonOperator('=out=', '=notin=') == new ComparisonOperator('=out=', '=notin=', ComparisonOperator.Type.MULTI_VALUED)
+    }
+
+    def 'should create with varargs'() {
+        given:
+        def operator = new ComparisonOperator("=a=", "=b=", "=c=", "=d=")
+
+        expect:
+        !operator.isMultiValue()
+        operator.symbols == new String[]{"=a=", "=b=", "=c=", "=d="}
     }
 }
