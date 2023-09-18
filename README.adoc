@@ -13,7 +13,9 @@ image:https://codecov.io/github/jensborch/rsql-parser/branch/master/graph/badge.
 image:https://maven-badges.herokuapp.com/maven-central/{mvn-group}/{name}/badge.svg["Maven Central", link="https://maven-badges.herokuapp.com/maven-central/{mvn-group}/{name}"]
 endif::env-github[]
 
-CAUTION: *This is a fork of the original https://github.com/jirutka/rsql-parser[RSQL parser] with added support for nested queries. If your project doesn't require this feature, it's advisable to use https://github.com/nstdio/rsql-parser[this maintained fork] instead.*
+:important-caption: ❗
+
+IMPORTANT: *This is a fork of the original https://github.com/jirutka/rsql-parser[RSQL parser] with added support for nested queries. If your project doesn't require this feature, it's advisable to use https://github.com/nstdio/rsql-parser[this maintained fork] instead.*
 
 RSQL is a query language for parametrized filtering of entries in RESTful APIs.
 It’s based on http://tools.ietf.org/html/draft-nottingham-atompub-fiql-00[FIQL] (Feed Item Query Language) – an URI-friendly syntax for expressing filters across the entries in an Atom Feed.
@@ -101,7 +103,9 @@ Value that doesn’t contain any reserved character or a white space can be unqu
 Nested queries are not supported for any of the build ind comparison operators, but can be used when extending RSQL with custom operators.
 
 ----
-arguments      = ( "(", value, { "," , value }, ")" ) | value | ( "(", comparison, { or, comparison }  ")" );
+arguments      = ( "(", value, { "," , value }, ")" ) |
+                 value |
+                 ( "(", comparison, { or, comparison }  ")" );
 value          = unreserved-str | double-quoted | single-quoted;
 
 unreserved-str = unreserved, { unreserved }
