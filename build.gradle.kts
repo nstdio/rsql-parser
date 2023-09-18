@@ -26,7 +26,7 @@ dependencies {
   javacc("net.java.dev.javacc:javacc:7.0.12")
 }
 
-group = "io.github.nstdio"
+group = "io.github.jensborch"
 description = "RSQL-parser"
 
 java {
@@ -45,7 +45,7 @@ publishing {
     pom {
       name.set("RSQL-parser")
       description.set("Parser of RSQL / FIQL (query language for RESTful APIs) written in JavaCC.")
-      url.set("https://github.com/nstdio/rsql-parser")
+      url.set("https://github.com/jensborch/rsql-parser")
       inceptionYear.set("2011")
 
       licenses {
@@ -67,22 +67,27 @@ publishing {
           name.set("Edgar Asatryan")
           email.set("nstdio@gmail.com")
         }
+        developer {
+          id.set("jensborch")
+          name.set("Jens Borch Christiansen")
+          email.set("jens.borch@gmail.com")
+        }
       }
 
       scm {
-        connection.set("scm:git:git@github.com:nstdio/rsql-parser.git")
-        developerConnection.set("scm:git:git@github.com:nstdio/rsql-parser.git")
-        url.set("https://github.com/nstdio/rsql-parser")
+        connection.set("scm:git:git@github.com:jensborch/rsql-parser.git")
+        developerConnection.set("scm:git:git@github.com:jensborch/rsql-parser.git")
+        url.set("https://github.com/jensborch/rsql-parser")
       }
 
       ciManagement {
         system.set("GitHub Actions")
-        url.set("https://github.com/nstdio/rsql-parser/actions")
+        url.set("https://github.com/jensborch/rsql-parser/actions")
       }
 
       issueManagement {
         system.set("GitHub Issues")
-        url.set("https://github.com/nstdio/rsql-parser/issues")
+        url.set("https://github.com/jensborch/rsql-parser/issues")
       }
     }
   }

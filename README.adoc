@@ -1,17 +1,19 @@
 = RSQL / FIQL parser
 Jakub Jirutka <https://github.com/jirutka[@jirutka]>
 :name: rsql-parser
-:version: 2.1.2
-:mvn-group: io.github.nstdio
-:gh-name: nstdio/{name}
+:version: 2.3.0
+:mvn-group: io.github.jensborch
+:gh-name: jensborch/{name}
 :gh-branch: master
 :src-base: link:src/main/java/cz/jirutka/rsql/parser
 
 ifdef::env-github[]
-image:https://github.com/{gh-name}/actions/workflows/build.yaml/badge.svg["Build", link="https://github.com/nstdio/rsql-parser/actions/workflows/build.yaml"]
-image:https://codecov.io/github/nstdio/rsql-parser/branch/master/graph/badge.svg?token=L13HXQDRYY["codecov", link="https://codecov.io/github/nstdio/rsql-parser"]
+image:https://github.com/{gh-name}/actions/workflows/build.yaml/badge.svg["Build", link="https://github.com/jensborch/rsql-parser/actions/workflows/build.yaml"]
+image:https://codecov.io/github/jensborch/rsql-parser/branch/master/graph/badge.svg?token=L13HXQDRYY["codecov", link="https://codecov.io/github/jensborch/rsql-parser"]
 image:https://maven-badges.herokuapp.com/maven-central/{mvn-group}/{name}/badge.svg["Maven Central", link="https://maven-badges.herokuapp.com/maven-central/{mvn-group}/{name}"]
 endif::env-github[]
+
+> :info: **This is a fork of the original https://github.com/jirutka/rsql-parser[RSQL parser] adding support for nested queries. If you don't need this it is probably better to use https://github.com/nstdio/rsql-parser[this maintained fork]**
 
 RSQL is a query language for parametrized filtering of entries in RESTful APIs.
 It’s based on http://tools.ietf.org/html/draft-nottingham-atompub-fiql-00[FIQL] (Feed Item Query Language) – an URI-friendly syntax for expressing filters across the entries in an Atom Feed.
