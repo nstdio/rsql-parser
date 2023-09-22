@@ -98,4 +98,16 @@ class NodesFactoryTest extends Specification {
         [new ComparisonOperator("=a=", "=b="), new ComparisonOperator("=b=", "=c=")] | 'ComparisonOperator[=b=, =c=] might shadow ComparisonOperator[=a=, =b=] because they have common symbol \'=b=\''
         [new ComparisonOperator("=a=", "=c="), new ComparisonOperator("=b=", "=c=")] | 'ComparisonOperator[=b=, =c=] might shadow ComparisonOperator[=a=, =c=] because they have common symbol \'=c=\''
     }
+
+    def 'throw IllegalArgumentException when operators are null or empty'() {
+        when:
+        new NodesFactory(operators as Set)
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.getMessage() == "operators must not be null or empty"
+
+        where:
+        operators << [null, []]
+    }
 }

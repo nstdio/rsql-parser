@@ -23,6 +23,8 @@
  */
 package cz.jirutka.rsql.parser.ast;
 
+import static cz.jirutka.rsql.parser.ast.Assert.notEmpty;
+
 import cz.jirutka.rsql.parser.UnknownOperatorException;
 import java.util.Arrays;
 import net.jcip.annotations.Immutable;
@@ -42,6 +44,7 @@ public class NodesFactory {
 
 
     public NodesFactory(Set<ComparisonOperator> operators) {
+        notEmpty(operators, "operators must not be null or empty");
 
         comparisonOperators = new HashMap<>(operators.size());
         for (ComparisonOperator op : operators) {

@@ -46,6 +46,13 @@ class RSQLParserTest extends Specification {
             operators << [null, []]
     }
 
+    def 'throw exception when nodesFactory is null'() {
+        when:
+           new RSQLParser(null as NodesFactory)
+        then:
+            def e = thrown IllegalArgumentException
+            e.message == "nodesFactory must not be null"
+    }
 
     def 'throw exception when input is null'() {
         when:
@@ -229,7 +236,7 @@ class RSQLParserTest extends Specification {
 
     //////// Helpers ////////
 
-    def parse(String rsql) { new RSQLParser().parse(rsql) }
+    def parse(String rsql) { new RSQLParser(factory).parse(rsql) }
 
     def and(Node... nodes) { new AndNode(nodes as List) }
     def or(Node... nodes) { new OrNode(nodes as List) }

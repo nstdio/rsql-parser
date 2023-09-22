@@ -27,6 +27,7 @@ import cz.jirutka.rsql.parser.ast.ComparisonOperator;
 import cz.jirutka.rsql.parser.ast.Node;
 import cz.jirutka.rsql.parser.ast.NodesFactory;
 import cz.jirutka.rsql.parser.ast.RSQLOperators;
+import java.util.Objects;
 import net.jcip.annotations.Immutable;
 
 import java.io.Reader;
@@ -80,7 +81,7 @@ public final class RSQLParser {
      * Creates a new instance of {@code RSQLParser} with the default set of comparison operators.
      */
     public RSQLParser() {
-        this.nodesFactory = new NodesFactory(RSQLOperators.defaultOperators());
+        this(RSQLOperators.defaultOperators());
     }
 
     /**
@@ -90,10 +91,20 @@ public final class RSQLParser {
      * @param operators A set of supported comparison operators. Must not be <tt>null</tt> or empty.
      */
     public RSQLParser(Set<ComparisonOperator> operators) {
-        if (operators == null || operators.isEmpty()) {
-            throw new IllegalArgumentException("operators must not be null or empty");
+       this(new NodesFactory(operators));
+    }
+
+    /**
+     * Creates a new instance of {@code RSQLParser} with given node factory.
+     *
+     * @param nodesFactory A node factory to use. Must not be <tt>null</tt>.
+     */
+    public RSQLParser(NodesFactory nodesFactory) {
+        if (nodesFactory == null) {
+            throw new IllegalArgumentException("nodesFactory must not be null");
         }
-        this.nodesFactory = new NodesFactory(operators);
+
+        this.nodesFactory = nodesFactory;
     }
 
     /**
