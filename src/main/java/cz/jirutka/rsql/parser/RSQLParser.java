@@ -27,7 +27,6 @@ import cz.jirutka.rsql.parser.ast.ComparisonOperator;
 import cz.jirutka.rsql.parser.ast.Node;
 import cz.jirutka.rsql.parser.ast.NodesFactory;
 import cz.jirutka.rsql.parser.ast.RSQLOperators;
-import java.util.Objects;
 import net.jcip.annotations.Immutable;
 
 import java.io.Reader;
