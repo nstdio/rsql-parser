@@ -30,7 +30,7 @@ public enum LogicalOperator {
 
     private final String symbol;
 
-    private LogicalOperator(String symbol) {
+    LogicalOperator(String symbol) {
         this.symbol = symbol;
     }
 
