@@ -2,6 +2,14 @@
 :repo-uri: https://github.com/jirutka/rsql-parser
 :issue-uri: {repo-uri}/issues
 
+== 2.1.2 (2023-06-23)
+* Update JavaCC to 7.0.12 version.
+* Optimize unescape performance
+* Optimize memory footprint by using Reader as a Parser source
+
+== 2.1.1 (2023-06-23)
+* Change artifact Maven coordinates from `cz.jirutka.rsql:rsql-parser` to `io.github.nstdio:rsql-parser`
+
 == 2.1.0 (2014-02-07)
 
 * Added `\` (backslash) as an escape character inside a quoted argument (requested in {issue-uri}/#7[#7]).
