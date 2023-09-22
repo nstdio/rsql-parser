@@ -43,6 +43,13 @@ public class NodesFactory {
     private final Map<String, ComparisonOperator> comparisonOperators;
 
 
+    /**
+     * Creates a new instance of {@code NodesFactory} with given supported operators.
+     *
+     * @param operators The supported operators. Must not be {@code null} or empty.
+     * @throws IllegalArgumentException If {@code operators} is {@code null} or empty. If operator's primary symbol is
+     *                                  equal to one of alternative symbols of other operator.
+     */
     public NodesFactory(Set<ComparisonOperator> operators) {
         notEmpty(operators, "operators must not be null or empty");
 
@@ -64,8 +71,7 @@ public class NodesFactory {
     }
 
     /**
-     * Creates a specific {@link LogicalNode} instance for the specified operator and with the
-     * given children nodes.
+     * Creates a specific {@link LogicalNode} instance for the specified operator and with the given children nodes.
      *
      * @param operator The logical operator to create a node for.
      * @param children Children nodes, i.e. operands.
@@ -87,8 +93,8 @@ public class NodesFactory {
     /**
      * Creates a {@link ComparisonNode} instance with the given parameters.
      *
-     * @param operatorToken A textual representation of the comparison operator to be found in the
-     *                      set of supported {@linkplain ComparisonOperator operators}.
+     * @param operatorToken A textual representation of the comparison operator to be found in the set of supported
+     *                      {@linkplain ComparisonOperator operators}.
      * @param selector      The selector that specifies the left side of the comparison.
      * @param arguments     A list of arguments that specifies the right side of the comparison.
      * @return a {@link ComparisonNode} instance with the given parameters.
