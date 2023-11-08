@@ -87,7 +87,16 @@ class RSQLParserTest extends Specification {
                 'allons-y', 'l00k.dot.path', 'look/XML/path', 'n:look/n:xml', 'path.to::Ref', '$doll_r.way' ]
     }
 
-    def 'throw exception for selector with reserved char: #input'() {
+    def 'parse quoted selector with any chars: #input'() {
+        given:
+            def expected = eq(input[1..-2], 'val')
+        expect:
+            parse("${input}==val") == expected
+        where:
+            input << [ '"hi there!"', "'Pěkný den!'", '"Flynn\'s *"', '"o)\'O\'(o"', '"6*7=42"' ]
+    }
+
+    def 'throw exception for selector with unquoted reserved char: #input'() {
         when:
             parse("${input}==val")
         then:
