@@ -67,6 +67,7 @@ comparison     = selector, comparison-op, arguments;
 
 Selector identifies a field (or attribute, element, …) of the resource representation to filter by.
 It can be any non empty Unicode string that doesn’t contain reserved characters (see below) or a white space.
+However, if selector does contain reserved characters or a white space it must be enclosed quotes `"` or `'`.
 The specific syntax of the selector is not enforced by this parser.
 
 ----
@@ -121,6 +122,7 @@ Examples of RSQL expressions in both FIQL-like and alternative notation:
 ----
 - name=="Kill Bill";year=gt=2003
 - name=="Kill Bill" and year>2003
+- "First Name"=="Kill Bill";year>2003
 - genres=in=(sci-fi,action);(director=='Christopher Nolan',actor==*Bale);year=ge=2000
 - genres=in=(sci-fi,action) and (director=='Christopher Nolan' or actor==*Bale) and year>=2000
 - director.lastName==Nolan;year=ge=2000;year=lt=2010
