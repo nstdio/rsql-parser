@@ -2,6 +2,12 @@
 :repo-uri: https://github.com/jirutka/rsql-parser
 :issue-uri: {repo-uri}/issues
 
+== 2.2.0 (2023-11-11)
+* Allow quoted selectors with reserved characters. https://github.com/sdeming[@sdeming]
+* NodesFactory will throw exception if operator alternative symbols are overlapping.
+* More optimize for unescape and unquote by using bulk ops.
+* Overload RSQLParser constructor to accept NodesFactory.
+
 == 2.1.2 (2023-06-23)
 * Update JavaCC to 7.0.12 version.
 * Optimize unescape performance
