@@ -23,6 +23,7 @@
  */
 package cz.jirutka.rsql.parser.ast
 
+import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -56,6 +57,13 @@ abstract class LogicalNodeTest extends Specification {
             children << new OrNode([child1])
         then: "node's children remains unchanged"
             node.children == [child1, child2]
+    }
+
+    def 'should honor equal and hashcode contracts'() {
+        expect:
+        EqualsVerifier.forClass(newNode([]).class as Class<Object>)
+            .withNonnullFields('children', 'operator')
+            .verify()
     }
 }
 
