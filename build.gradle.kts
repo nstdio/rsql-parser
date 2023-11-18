@@ -156,6 +156,10 @@ tasks {
     outputDirectory = outputDirectory.resolve("cz/jirutka/rsql/parser")
   }
 
+  named("sourcesJar") {
+    dependsOn(compileJavacc)
+  }
+
   named("afterReleaseBuild") {
     dependsOn("publishToSonatype", "closeAndReleaseSonatypeStagingRepository")
   }
