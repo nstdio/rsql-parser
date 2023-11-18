@@ -154,3 +154,11 @@ tasks {
     dependsOn("publishToSonatype", "closeAndReleaseSonatypeStagingRepository")
   }
 }
+
+java {
+  sourceSets {
+    main {
+      java.srcDirs(project.layout.buildDirectory.dir("generated/javacc"))
+    }
+  }
+}
