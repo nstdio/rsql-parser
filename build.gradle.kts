@@ -23,7 +23,7 @@ dependencies {
 
   testImplementation("org.spockframework:spock-core:2.4-M1-groovy-4.0")
 
-  javacc("net.java.dev.javacc:javacc:7.0.12")
+  javacc("net.java.dev.javacc:javacc:7.0.13")
 }
 
 group = "io.github.nstdio"
