@@ -36,6 +36,12 @@ java {
   toolchain {
     languageVersion.set(JavaLanguageVersion.of(8))
   }
+
+  sourceSets {
+    main {
+      java.srcDirs(project.layout.buildDirectory.dir("generated/javacc"))
+    }
+  }
 }
 
 publishing {
@@ -152,13 +158,5 @@ tasks {
 
   named("afterReleaseBuild") {
     dependsOn("publishToSonatype", "closeAndReleaseSonatypeStagingRepository")
-  }
-}
-
-java {
-  sourceSets {
-    main {
-      java.srcDirs(project.layout.buildDirectory.dir("generated/javacc"))
-    }
   }
 }
