@@ -2,6 +2,9 @@
 :repo-uri: https://github.com/jirutka/rsql-parser
 :issue-uri: {repo-uri}/issues
 
+== 2.2.1 (2023-11-18)
+* Update JavaCC to 7.0.13 version.
+
 == 2.2.0 (2023-11-11)
 * Allow quoted selectors with reserved characters. https://github.com/sdeming[@sdeming]
 * NodesFactory will throw exception if operator alternative symbols are overlapping.
