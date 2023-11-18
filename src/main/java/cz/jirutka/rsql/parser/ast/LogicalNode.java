@@ -46,8 +46,8 @@ public abstract class LogicalNode extends AbstractNode implements Iterable<Node>
      * @param children Children nodes, i.e. operands; must not be <tt>null</tt>.
      */
     protected LogicalNode(LogicalOperator operator, List<? extends Node> children) {
-        assert operator != null : "operator must not be null";
-        assert children != null : "children must not be null";
+        Assert.notNull(operator, "operator must not be null");
+        Assert.notNull(children, "children must not be null");
 
         this.operator = operator;
         this.children = unmodifiableList(new ArrayList<>(children));
