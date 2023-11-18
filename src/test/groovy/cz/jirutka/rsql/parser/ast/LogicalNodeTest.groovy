@@ -71,10 +71,20 @@ class AndNodeTest extends LogicalNodeTest {
     LogicalNode newNode(List children) {
         new AndNode(children)
     }
+
+    def 'should return proper operator'() {
+        expect:
+        new AndNode([]).operator == LogicalOperator.AND
+    }
 }
 
 class OrNodeTest extends LogicalNodeTest {
     LogicalNode newNode(List children) {
         new OrNode(children)
+    }
+
+    def 'should return proper operator'() {
+        expect:
+        new OrNode([]).operator == LogicalOperator.OR
     }
 }
