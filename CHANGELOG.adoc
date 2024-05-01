@@ -2,6 +2,9 @@
 :repo-uri: https://github.com/jirutka/rsql-parser
 :issue-uri: {repo-uri}/issues
 
+== 2.3.2 (2024-05-01)
+* Avoid unnecessary copying ComparisonNode or it's arguments.
+
 == 2.3.1 (2024-05-01)
 * `ComparisonNode::toString` throws NPE when argument list is empty.
 
