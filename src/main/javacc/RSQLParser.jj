@@ -208,7 +208,7 @@ List<String> Arguments():
 {
     ( <LPAREN> value = CommaSepArguments() <RPAREN> ) { return (List) value; }
     |
-    (value = Argument() { return Arrays.asList((String) value); })?
+    (value = Argument() { return Collections.singletonList((String) value); })?
     {
       return Collections.emptyList();
     }
