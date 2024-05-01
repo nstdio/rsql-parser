@@ -2,6 +2,9 @@
 :repo-uri: https://github.com/jirutka/rsql-parser
 :issue-uri: {repo-uri}/issues
 
+== 2.3.1 (2024-05-01)
+* `ComparisonNode::toString` throws NPE when argument list is empty.
+
 == 2.3.0 (2024-05-01)
 * Support for operators without arguments `=null=`, `=notnull=`.
 * Allow `=in=` and `=out=` operators to have no arguments.
