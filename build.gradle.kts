@@ -145,6 +145,9 @@ tasks {
 
   withType<Javadoc>().configureEach {
     options.encoding = "UTF-8"
+    (options as? StandardJavadocDocletOptions)?.tags(
+      "apiNote:a:API Note:"
+    )
   }
 
   withType<AbstractArchiveTask>().configureEach {

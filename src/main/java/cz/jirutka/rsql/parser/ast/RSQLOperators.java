@@ -2,6 +2,7 @@
  * The MIT License
  *
  * Copyright 2013-2014 Jakub Jirutka <jakub@jirutka.cz>.
+ * Copyright 2024 Edgar Asatryan <nstdio@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,18 +32,20 @@ import static java.util.Arrays.asList;
 public abstract class RSQLOperators {
 
     public static final ComparisonOperator
-            EQUAL = new ComparisonOperator("=="),
-            NOT_EQUAL = new ComparisonOperator("!="),
-            GREATER_THAN = new ComparisonOperator("=gt=", ">"),
-            GREATER_THAN_OR_EQUAL = new ComparisonOperator("=ge=", ">="),
-            LESS_THAN = new ComparisonOperator("=lt=", "<"),
-            LESS_THAN_OR_EQUAL = new ComparisonOperator("=le=", "<="),
-            IN = new ComparisonOperator("=in=", true),
-            NOT_IN = new ComparisonOperator("=out=", true);
+            EQUAL = new ComparisonOperator("==", Arity.nary(1)),
+            NOT_EQUAL = new ComparisonOperator("!=", Arity.nary(1)),
+            GREATER_THAN = new ComparisonOperator("=gt=", ">", Arity.nary(1)),
+            GREATER_THAN_OR_EQUAL = new ComparisonOperator("=ge=", ">=", Arity.nary(1)),
+            LESS_THAN = new ComparisonOperator("=lt=", "<", Arity.nary(1)),
+            LESS_THAN_OR_EQUAL = new ComparisonOperator("=le=", "<=", Arity.nary(1)),
+            IN = new ComparisonOperator("=in=", Arity.of(1, Integer.MAX_VALUE)),
+            NOT_IN = new ComparisonOperator("=out=", Arity.of(1, Integer.MAX_VALUE)),
+            IS_NULL = new ComparisonOperator("=null=", Arity.nary(0)),
+            NOT_NULL = new ComparisonOperator("=notnull=", Arity.nary(0));
 
 
     public static Set<ComparisonOperator> defaultOperators() {
         return new HashSet<>(asList(EQUAL, NOT_EQUAL, GREATER_THAN, GREATER_THAN_OR_EQUAL,
-                                    LESS_THAN, LESS_THAN_OR_EQUAL, IN, NOT_IN));
+                                    LESS_THAN, LESS_THAN_OR_EQUAL, IN, NOT_IN, IS_NULL, NOT_NULL));
     }
 }

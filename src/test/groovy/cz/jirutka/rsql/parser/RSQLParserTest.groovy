@@ -2,6 +2,7 @@
  * The MIT License
  *
  * Copyright 2013-2014 Jakub Jirutka <jakub@jirutka.cz>.
+ * Copyright 2023-2024 Edgar Asatryan <nstdio@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -68,7 +69,17 @@ class RSQLParserTest extends Specification {
         expect:
             parse("sel${op}val") == expected
         where:
-            op << defaultOperators()*.symbols.flatten()
+            op << defaultOperators().findAll { it != IS_NULL && it != NOT_NULL }.symbols.flatten()
+    }
+
+    def 'should parse operators without arguments'() {
+        expect:
+        parse(input) == expected
+
+        where:
+        input                     | expected
+        's0=null=,s1=notnull='    | or(isNull('s0'), notNull('s1'))
+        's0=null= or s1=notnull=' | or(isNull('s0'), notNull('s1'))
     }
 
     def 'throw exception for deprecated short equal operator: ='() {
@@ -242,6 +253,22 @@ class RSQLParserTest extends Specification {
             ex.cause instanceof UnknownOperatorException
     }
 
+    def 'use parser with custom set of operators 2'() {
+        setup:
+            def allOperator = new ComparisonOperator('=all=', Arity.of(1, Integer.MAX_VALUE))
+            def parser = new RSQLParser([EQUAL, allOperator] as Set)
+            def expected = and(eq('name', 'TRON'), new ComparisonNode(allOperator, 'genres', ['sci-fi', 'thriller']))
+
+        expect:
+            parser.parse('name==TRON;genres=all=(sci-fi,thriller)') == expected
+
+        when: 'unsupported operator used'
+            parser.parse('name==TRON;year=ge=2010')
+        then:
+            def ex = thrown(RSQLParserException)
+            ex.cause instanceof UnknownOperatorException
+    }
+
 
     //////// Helpers ////////
 
@@ -251,4 +278,6 @@ class RSQLParserTest extends Specification {
     def or(Node... nodes) { new OrNode(nodes as List) }
     def eq(sel, arg) { new ComparisonNode(EQUAL, sel, [arg as String]) }
     def out(sel, ...args) { new ComparisonNode(NOT_IN, sel, args as List) }
+    def isNull(sel) { new ComparisonNode(IS_NULL, sel, []) }
+    def notNull(sel) { new ComparisonNode(NOT_NULL, sel, []) }
 }

@@ -2,6 +2,7 @@
  * The MIT License
  *
  * Copyright 2013-2014 Jakub Jirutka <jakub@jirutka.cz>.
+ * Copyright 2023-2024 Edgar Asatryan <nstdio@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,6 +47,11 @@ class ComparisonOperatorTest extends Specification {
     def 'equals when contains same symbols'() {
         expect:
             new ComparisonOperator('=out=', '=notin=') == new ComparisonOperator('=out=', '=notin=', true)
+    }
+
+    def 'equals when contains same symbols 2'() {
+        expect:
+            new ComparisonOperator('=out=', '=notin=') == new ComparisonOperator('=out=', '=notin=', Arity.of(1, Integer.MAX_VALUE))
     }
 
     def 'should create with varargs'() {
