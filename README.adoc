@@ -155,7 +155,7 @@ The parser can be simply enhanced by custom FIQL-like comparison operators, so y
 [source, java]
 ----
 Set<ComparisonOperator> operators = RSQLOperators.defaultOperators();
-operators.add(new ComparisonOperator("=all=", true));
+operators.add(new ComparisonOperator("=all=", Arity.of(1, Integer.MAX_VALUE)));
 
 Node rootNode = new RSQLParser(operators).parse("genres=all=('thriller','sci-fi')");
 ----
