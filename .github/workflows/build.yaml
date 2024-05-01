@@ -22,6 +22,6 @@ jobs:
           cache: 'gradle'
       - name: Build
         run: ./gradlew build
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         with:
           verbose: true
