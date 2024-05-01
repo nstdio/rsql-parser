@@ -2,6 +2,11 @@
 :repo-uri: https://github.com/jirutka/rsql-parser
 :issue-uri: {repo-uri}/issues
 
+== 2.3.0 (2024-05-01)
+* Support for operators without arguments `=null=`, `=notnull=`.
+* Allow `=in=` and `=out=` operators to have no arguments.
+* Optimize memory footprint of argument list creation when there's only one argument.
+
 == 2.2.1 (2023-11-18)
 * Update JavaCC to 7.0.13 version.
 
