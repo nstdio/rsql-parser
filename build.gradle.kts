@@ -18,7 +18,7 @@ dependencies {
 
   testImplementation("nl.jqno.equalsverifier:equalsverifier:3.16.1")
 
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
 
   testImplementation("org.spockframework:spock-core:2.4-M4-groovy-4.0")
