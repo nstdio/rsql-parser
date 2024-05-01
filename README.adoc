@@ -100,7 +100,7 @@ Argument can be no value, single value, or multiple values in parenthesis separa
 Value that doesn’t contain any reserved character or a white space can be unquoted, other arguments must be enclosed in single or double quotes.
 
 ----
-arguments      = ( "(", value, { "," , value }, ")" ) | ( value )?;
+arguments      = ( "(", ( value, { "," , value }, )? ")" ) | ( value )?;
 value          = unreserved-str | double-quoted | single-quoted;
 
 unreserved-str = unreserved, { unreserved }
