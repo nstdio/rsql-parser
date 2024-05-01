@@ -269,6 +269,46 @@ class RSQLParserTest extends Specification {
             ex.cause instanceof UnknownOperatorException
     }
 
+    def 'Should parse empty multi-argument operators'() {
+        expect:
+        parse(input) == expected
+
+        where:
+        input         | expected
+        's0=in=()'    | 'in'('s0')
+        's0=in=(   )' | 'in'('s0')
+        's0=out=()'   | out('s0')
+        's0=out=(  )' | out('s0')
+    }
+
+
+    def 'Should parse multi-argument operators with whitespaces values'() {
+        expect:
+        parse(input) == expected
+
+        where:
+        input                   | expected
+        "s0=in=(' ')"           | 'in'('s0', ' ')
+        "s0=in=('  ')"          | 'in'('s0', '  ')
+        "s0=in=('  ',' ')"      | 'in'('s0', '  ', ' ')
+        "s0=in=('  ' or ' ')"   | 'in'('s0', '  ', ' ')
+        "s0=in=('  ',' ',' ')"  | 'in'('s0', '  ', ' ', ' ')
+        "s0=out=(' ')"          | 'out'('s0', ' ')
+        "s0=out=('  ')"         | 'out'('s0', '  ')
+        "s0=out=('  ' or ' ')"  | 'out'('s0', '  ', ' ')
+        "s0=out=('  ',' ',' ')" | 'out'('s0', '  ', ' ', ' ')
+    }
+
+    def 'Should throw when coma separated args contains only coma'() {
+        when:
+        parse(input)
+
+        then:
+        thrown RSQLParserException
+
+        where:
+        input << [ 's0=in=( , )', 's0=in=( or )']
+    }
 
     //////// Helpers ////////
 
@@ -277,6 +317,7 @@ class RSQLParserTest extends Specification {
     def and(Node... nodes) { new AndNode(nodes as List) }
     def or(Node... nodes) { new OrNode(nodes as List) }
     def eq(sel, arg) { new ComparisonNode(EQUAL, sel, [arg as String]) }
+    def 'in'(sel, ...args) { new ComparisonNode(IN, sel, args as List) }
     def out(sel, ...args) { new ComparisonNode(NOT_IN, sel, args as List) }
     def isNull(sel) { new ComparisonNode(IS_NULL, sel, []) }
     def notNull(sel) { new ComparisonNode(NOT_NULL, sel, []) }

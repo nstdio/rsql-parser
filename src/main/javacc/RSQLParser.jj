@@ -206,11 +206,22 @@ List<String> Arguments():
     final Object value;
 }
 {
-    ( <LPAREN> value = CommaSepArguments() <RPAREN> ) { return (List) value; }
+    ( <LPAREN> value = OptionalCommaSepArguments() <RPAREN> ) { return (List) value; }
     |
     (value = Argument() { return Collections.singletonList((String) value); })?
     {
       return Collections.emptyList();
+    }
+}
+
+List<String> OptionalCommaSepArguments():
+{
+    List<String> list = null;
+}
+{
+    [ list = CommaSepArguments() ]
+    {
+      return list == null ? Collections.emptyList() : list;
     }
 }
 

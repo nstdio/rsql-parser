@@ -19,8 +19,8 @@ class RSQLOperatorsSpec extends Specification {
         GREATER_THAN_OR_EQUAL | new String[]{'=ge=', '>='} | 1   | 1
         LESS_THAN             | new String[]{'=lt=', '<'}  | 1   | 1
         LESS_THAN_OR_EQUAL    | new String[]{'=le=', '<='} | 1   | 1
-        IN                    | new String[]{'=in='}       | 1   | Integer.MAX_VALUE
-        NOT_IN                | new String[]{'=out='}      | 1   | Integer.MAX_VALUE
+        IN                    | new String[]{'=in='}       | 0   | Integer.MAX_VALUE
+        NOT_IN                | new String[]{'=out='}      | 0   | Integer.MAX_VALUE
         IS_NULL               | new String[]{'=null='}     | 0   | 0
         NOT_NULL              | new String[]{'=notnull='}  | 0   | 0
     }
