@@ -138,9 +138,17 @@ public final class ComparisonNode extends AbstractNode {
 
     @Override
     public String toString() {
-        String args = operator.getArity().max() > 1
-                ? join(arguments, "','", "('", "')")
-                : "'" + arguments.get(0) + "'";
+        Arity arity = operator.getArity();
+
+        final String args;
+        if (arity.max() > 1) {
+            args = join(arguments, "','", "('", "')", "()");
+        } else if (!arguments.isEmpty()) {
+            args = "'" + arguments.get(0) + "'";
+        } else {
+            args = "";
+        }
+
         return selector + operator + args;
     }
 

@@ -67,10 +67,20 @@ class ComparisonNodeTest extends Specification {
         node.toString() == expected
 
         where:
-        node                                                               | expected
-        new ComparisonNode(IN, 'genres', ['thriller', 'sci-fi', 'comedy']) | "genres=in=('thriller','sci-fi','comedy')"
-        new ComparisonNode(IN, 'genres', ['thriller'])                     | "genres=in=('thriller')"
-        new ComparisonNode(EQUAL, 'genres', ['thriller'])                  | "genres=='thriller'"
+        node                                                                                    | expected
+        new ComparisonNode(IN, 'genres', ['thriller', 'sci-fi', 'comedy'])                      | "genres=in=('thriller','sci-fi','comedy')"
+        new ComparisonNode(IN, 'genres', ['thriller'])                                          | "genres=in=('thriller')"
+        new ComparisonNode(IN, 'genres', [])                                                    | "genres=in=()"
+        new ComparisonNode(EQUAL, 'genres', ['thriller'])                                       | "genres=='thriller'"
+        new ComparisonNode(IS_NULL, 's0', [])                                                   | "s0=null="
+        new ComparisonNode(new ComparisonOperator('=opt=', Arity.of(0, 1)), 's0', [])           | "s0=opt="
+        new ComparisonNode(new ComparisonOperator('=opt=', Arity.of(0, 1)), 's0', ['v'])        | "s0=opt='v'"
+        new ComparisonNode(new ComparisonOperator('=opt=', Arity.of(1, 1)), 's0', ['v'])        | "s0=opt='v'"
+        new ComparisonNode(new ComparisonOperator('=opt=', Arity.of(0, 2)), 's0', ['v'])        | "s0=opt=('v')"
+        new ComparisonNode(new ComparisonOperator('=opt=', Arity.of(0, 2)), 's0', ['v1', 'v2']) | "s0=opt=('v1','v2')"
+        new ComparisonNode(new ComparisonOperator('=opt=', Arity.of(0, 2)), 's0', [])           | "s0=opt=()"
+        new ComparisonNode(new ComparisonOperator('=opt=', Arity.of(1, 2)), 's0', ['v'])        | "s0=opt=('v')"
+        new ComparisonNode(new ComparisonOperator('=opt=', Arity.of(1, 2)), 's0', ['v1', 'v2']) | "s0=opt=('v1','v2')"
     }
 
     def 'should throw exception on arity mismatch'() {
