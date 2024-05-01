@@ -85,6 +85,8 @@ Comparison operators are in FIQL notation and some of them has an alternative sy
 * Greater than or equal to : `=ge=` or `>=`
 * In : `=in=`
 * Not in : `=out=`
+* Null: `=null=`
+* Not Null: `=notnull=`
 
 You can also simply extend this parser with your own operators (see the <<How to add custom operators, next section>>).
 
@@ -94,11 +96,11 @@ comp-fiql      = ( ( "=", { ALPHA } ) | "!" ), "=";
 comp-alt       = ( ">" | "<" ), [ "=" ];
 ----
 
-Argument can be a single value, or multiple values in parenthesis separated by comma.
+Argument can be no value, single value, or multiple values in parenthesis separated by comma.
 Value that doesn’t contain any reserved character or a white space can be unquoted, other arguments must be enclosed in single or double quotes.
 
 ----
-arguments      = ( "(", value, { "," , value }, ")" ) | value;
+arguments      = ( "(", value, { "," , value }, ")" ) | ( value )?;
 value          = unreserved-str | double-quoted | single-quoted;
 
 unreserved-str = unreserved, { unreserved }
@@ -130,6 +132,7 @@ Examples of RSQL expressions in both FIQL-like and alternative notation:
 - director.lastName==Nolan and year>=2000 and year<2010
 - genres=in=(sci-fi,action);genres=out=(romance,animated,horror),director==Que*Tarantino
 - genres=in=(sci-fi,action) and genres=out=(romance,animated,horror) or director==Que*Tarantino
+- year=notnull= and director.lastName=isnull=
 ----
 
 == How to use

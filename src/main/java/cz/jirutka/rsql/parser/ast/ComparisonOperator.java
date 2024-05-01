@@ -2,6 +2,7 @@
  * The MIT License
  *
  * Copyright 2013-2014 Jakub Jirutka <jakub@jirutka.cz>.
+ * Copyright 2024 Edgar Asatryan <nstdio@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +37,7 @@ public final class ComparisonOperator {
 
     private final String[] symbols;
 
-    private final boolean multiValue;
-
+    private final Arity arity;
 
     /**
      * @param symbols    Textual representation of this operator (e.g. <tt>=gt=</tt>); the first item
@@ -47,13 +47,30 @@ public final class ComparisonOperator {
      *                   validated in {@link NodesFactory}.
      * @throws IllegalArgumentException If the {@code symbols} is either <tt>null</tt>, empty,
      *                                  or contain illegal symbols.
+     * @see #ComparisonOperator(String[], Arity)
+     * @deprecated in favor of {@linkplain #ComparisonOperator(String[], Arity)}
      */
+    @Deprecated
     public ComparisonOperator(String[] symbols, boolean multiValue) {
+        this(symbols, multiValue ? Arity.of(1, Integer.MAX_VALUE) : Arity.nary(1));
+    }
+
+    /**
+     * @param symbols  Textual representation of this operator (e.g. <tt>=gt=</tt>); the first item is primary
+     *                 representation, any others are alternatives. Must match {@literal =[a-zA-Z]*=|[><]=?|!=}.
+     * @param arity    Arity of this operator.
+     * @throws IllegalArgumentException If the {@code symbols} is either <tt>null</tt>, empty, or contain illegal
+     *                                  symbols.
+     * @since 2.3.0
+     */
+    public ComparisonOperator(String[] symbols, Arity arity) {
         Assert.notEmpty(symbols, "symbols must not be null or empty");
+        Assert.notNull(arity, "arity must not be null");
         for (String sym : symbols) {
             Assert.isTrue(isValidOperatorSymbol(sym), "symbol must match: %s", SYMBOL_PATTERN);
         }
-        this.multiValue = multiValue;
+
+        this.arity = arity;
         this.symbols = symbols.clone();
     }
 
@@ -63,9 +80,22 @@ public final class ComparisonOperator {
      * @param multiValue Whether this operator may be used with multiple arguments. This is then
      *                   validated in {@link NodesFactory}.
      * @see #ComparisonOperator(String[], boolean)
+     * @deprecated in favor of {@linkplain #ComparisonOperator(String, Arity)}
      */
+    @Deprecated
     public ComparisonOperator(String symbol, boolean multiValue) {
         this(new String[]{symbol}, multiValue);
+    }
+
+    /**
+     * @param symbol Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
+     *               {@literal =[a-zA-Z]*=|[><]=?|!=}.
+     * @param arity  Arity of this operator.
+     * @see #ComparisonOperator(String[], boolean)
+     * @since 2.3.0
+     */
+    public ComparisonOperator(String symbol, Arity arity) {
+        this(new String[]{symbol}, arity);
     }
 
     /**
@@ -74,9 +104,22 @@ public final class ComparisonOperator {
      * @param altSymbol  Alternative representation for {@code symbol}.
      * @param multiValue Whether this operator may be used with multiple arguments. This is then
      * @see #ComparisonOperator(String[], boolean)
+     * @deprecated in favor of {@linkplain #ComparisonOperator(String, String, Arity)}
      */
     public ComparisonOperator(String symbol, String altSymbol, boolean multiValue) {
         this(new String[]{symbol, altSymbol}, multiValue);
+    }
+
+    /**
+     * @param symbol    Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
+     *                  {@literal =[a-zA-Z]*=|[><]=?|!=}.
+     * @param altSymbol Alternative representation for {@code symbol}.
+     * @param arity     Arity of this operator.
+     * @see #ComparisonOperator(String[], boolean)
+     * @since 2.3.0
+     */
+    public ComparisonOperator(String symbol, String altSymbol, Arity arity) {
+        this(new String[]{symbol, altSymbol}, arity);
     }
 
     /**
@@ -112,11 +155,22 @@ public final class ComparisonOperator {
      * Whether this operator may be used with multiple arguments.
      *
      * @return Whether this operator may be used with multiple arguments.
+     * @deprecated use {@linkplain #getArity()}
      */
+    @Deprecated
     public boolean isMultiValue() {
-        return multiValue;
+        return arity.max() > 1;
     }
 
+    /**
+     * Returns the arity of this operator.
+     *
+     * @return the arity of this operator.
+     * @since 2.3.0
+     */
+    public Arity getArity() {
+        return arity;
+    }
 
     /**
      * Whether the given string can represent an operator.

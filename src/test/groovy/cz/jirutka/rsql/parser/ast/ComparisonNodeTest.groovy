@@ -2,6 +2,7 @@
  * The MIT License
  *
  * Copyright 2013-2014 Jakub Jirutka <jakub@jirutka.cz>.
+ * Copyright 2023-2024 Edgar Asatryan <nstdio@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -70,6 +71,23 @@ class ComparisonNodeTest extends Specification {
         new ComparisonNode(IN, 'genres', ['thriller', 'sci-fi', 'comedy']) | "genres=in=('thriller','sci-fi','comedy')"
         new ComparisonNode(IN, 'genres', ['thriller'])                     | "genres=in=('thriller')"
         new ComparisonNode(EQUAL, 'genres', ['thriller'])                  | "genres=='thriller'"
+    }
+
+    def 'should throw exception on arity mismatch'() {
+        when:
+        new ComparisonNode(operator, 's', args)
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message == expected
+
+        where:
+        operator                                      | args       | expected
+        new ComparisonOperator('=a=', Arity.nary(0))  | ['a']      | "operator '=a=' can have exactly 0 argument(s), but got 1"
+        new ComparisonOperator('=b=', Arity.nary(1))  | ['a', 'b'] | "operator '=b=' can have exactly 1 argument(s), but got 2"
+        new ComparisonOperator('=c=', Arity.nary(5))  | []         | "operator '=c=' can have exactly 5 argument(s), but got 0"
+        new ComparisonOperator('=d=', Arity.of(1, 5)) | []         | "operator '=d=' can have from 1 to 5 argument(s), but got 0"
+        new ComparisonOperator('=e=', Arity.of(2, 6)) | ['a']      | "operator '=e=' can have from 2 to 6 argument(s), but got 1"
     }
 
     def 'should honor equal and hashcode contracts'() {

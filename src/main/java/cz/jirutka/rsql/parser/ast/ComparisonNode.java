@@ -2,6 +2,7 @@
  * The MIT License
  *
  * Copyright 2013-2014 Jakub Jirutka <jakub@jirutka.cz>.
+ * Copyright 2024 Edgar Asatryan <nstdio@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +24,11 @@
  */
 package cz.jirutka.rsql.parser.ast;
 
-import net.jcip.annotations.Immutable;
+import static cz.jirutka.rsql.parser.ast.StringUtils.join;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static cz.jirutka.rsql.parser.ast.StringUtils.join;
+import net.jcip.annotations.Immutable;
 
 /**
  * This node represents a comparison with operator, selector and arguments,
@@ -54,9 +54,8 @@ public final class ComparisonNode extends AbstractNode {
     public ComparisonNode(ComparisonOperator operator, String selector, List<String> arguments) {
         Assert.notNull(operator, "operator must not be null");
         Assert.notBlank(selector, "selector must not be blank");
-        Assert.notEmpty(arguments, "arguments list must not be empty");
-        Assert.isTrue(operator.isMultiValue() || arguments.size() == 1,
-            "operator %s expects single argument, but multiple values given", operator);
+        Assert.notNull(arguments, "arguments must not be null");
+        validate(operator, arguments.size());
 
         this.operator = operator;
         this.selector = selector;
@@ -118,9 +117,28 @@ public final class ComparisonNode extends AbstractNode {
         return new ComparisonNode(operator, selector, newArguments);
     }
 
+    private static void validate(ComparisonOperator operator, int argc) {
+        Arity arity = operator.getArity();
+        int min = arity.min();
+        int max = arity.max();
+
+        if (argc < min || argc > max) {
+            final String message;
+            if (min == max) {
+                message = String.format("operator '%s' can have exactly %d argument(s), but got %d",
+                    operator.getSymbol(), max, argc);
+            } else {
+                message = String.format("operator '%s' can have from %d to %d argument(s), but got %d",
+                    operator.getSymbol(), min, max, argc);
+            }
+
+            throw new IllegalArgumentException(message);
+        }
+    }
+
     @Override
     public String toString() {
-        String args = operator.isMultiValue()
+        String args = operator.getArity().max() > 1
                 ? join(arguments, "','", "('", "')")
                 : "'" + arguments.get(0) + "'";
         return selector + operator + args;
