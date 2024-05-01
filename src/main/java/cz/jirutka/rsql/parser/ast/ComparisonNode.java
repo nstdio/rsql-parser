@@ -52,6 +52,11 @@ public final class ComparisonNode extends AbstractNode {
      * @throws IllegalArgumentException If one of the conditions specified above it not met.
      */
     public ComparisonNode(ComparisonOperator operator, String selector, List<String> arguments) {
+        this(operator, selector, new ArrayList<>(arguments), true);
+    }
+
+    ComparisonNode(ComparisonOperator operator, String selector, List<String> arguments,
+        @SuppressWarnings("unused") boolean trusted) {
         Assert.notNull(operator, "operator must not be null");
         Assert.notBlank(selector, "selector must not be blank");
         Assert.notNull(arguments, "arguments must not be null");
@@ -59,7 +64,7 @@ public final class ComparisonNode extends AbstractNode {
 
         this.operator = operator;
         this.selector = selector;
-        this.arguments = new ArrayList<>(arguments);
+        this.arguments = arguments;
     }
 
     public <R, A> R accept(RSQLVisitor<R, A> visitor, A param) {
@@ -77,7 +82,7 @@ public final class ComparisonNode extends AbstractNode {
      * @return a copy of this node with the specified operator.
      */
     public ComparisonNode withOperator(ComparisonOperator newOperator) {
-        return new ComparisonNode(newOperator, selector, arguments);
+        return new ComparisonNode(newOperator, selector, arguments, true);
     }
 
     public String getSelector() {
@@ -91,7 +96,7 @@ public final class ComparisonNode extends AbstractNode {
      * @return a copy of this node with the specified selector.
      */
     public ComparisonNode withSelector(String newSelector) {
-        return new ComparisonNode(operator, newSelector, arguments);
+        return new ComparisonNode(operator, newSelector, arguments, true);
     }
 
     /**

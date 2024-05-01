@@ -62,6 +62,27 @@ class ComparisonNodeTest extends Specification {
             node.getArguments() == ['thriller', 'sci-fi']
     }
 
+    def 'should not copy list when not needed'() {
+        given:
+        def args = ['thriller', 'sci-fi']
+        def node = new ComparisonNode(IN, 'genres', args)
+        def argsField = ComparisonNode.getDeclaredField('arguments')
+        argsField.setAccessible(true)
+        def rawArguments = argsField.get(node)
+
+        when:
+        def actual1 = node.withSelector('gs')
+
+        then:
+        argsField.get(actual1) is(rawArguments)
+
+        when:
+        def actual2 = actual1.withOperator(NOT_IN)
+
+        then:
+        argsField.get(actual2) is(rawArguments)
+    }
+
     def 'should create proper toString representation'() {
         expect:
         node.toString() == expected
