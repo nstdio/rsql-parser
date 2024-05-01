@@ -83,6 +83,17 @@ class ComparisonNodeTest extends Specification {
         argsField.get(actual2) is(rawArguments)
     }
 
+    def 'should not copy node when not needed'() {
+        given:
+        def node = new ComparisonNode(IN, 'genres', ['thriller', 'sci-fi'])
+
+        when:
+        def actual1 = node.withSelector(node.selector)
+
+        then:
+        actual1.is(node)
+    }
+
     def 'should create proper toString representation'() {
         expect:
         node.toString() == expected

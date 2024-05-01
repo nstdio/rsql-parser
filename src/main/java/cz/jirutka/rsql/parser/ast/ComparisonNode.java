@@ -96,7 +96,9 @@ public final class ComparisonNode extends AbstractNode {
      * @return a copy of this node with the specified selector.
      */
     public ComparisonNode withSelector(String newSelector) {
-        return new ComparisonNode(operator, newSelector, arguments, true);
+        return selector.equals(newSelector)
+        ? this
+        : new ComparisonNode(operator, newSelector, arguments, true);
     }
 
     /**
