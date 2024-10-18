@@ -67,7 +67,7 @@ public final class ComparisonOperator {
         Assert.notEmpty(symbols, "symbols must not be null or empty");
         Assert.notNull(arity, "arity must not be null");
         for (String sym : symbols) {
-            Assert.isTrue(isValidOperatorSymbol(sym), "symbol must match: %s", SYMBOL_PATTERN);
+            Assert.isTrue(isValidOperatorSymbol(sym), "symbol \"%s\" must match: \"%s\"", sym, SYMBOL_PATTERN);
         }
 
         this.arity = arity;

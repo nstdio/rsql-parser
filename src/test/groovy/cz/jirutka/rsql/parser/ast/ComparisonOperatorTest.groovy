@@ -39,9 +39,18 @@ class ComparisonOperatorTest extends Specification {
         when:
             new ComparisonOperator(sym)
         then:
-            thrown IllegalArgumentException
+            def e = thrown IllegalArgumentException
+            e.message == "symbol \"$sym\" must match: \"=[a-zA-Z]*=|[><]=?|!=\""
         where:
-            sym << [null, '', ' ', 'foo', '=123=', '=', '=<', '=>', '=!', 'a=b=c']
+            sym << ['', ' ', 'foo', '=123=', '=', '=<', '=>', '=!', 'a=b=c']
+    }
+
+    def 'throw IllegalArgumentException when given invalid symbol'() {
+        when:
+        new ComparisonOperator(null)
+        then:
+        def e = thrown IllegalArgumentException
+        e.message == 'symbols must not be null or empty'
     }
 
     def 'equals when contains same symbols'() {
