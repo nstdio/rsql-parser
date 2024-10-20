@@ -98,6 +98,16 @@ class RSQLParserTest extends Specification {
                 'allons-y', 'l00k.dot.path', 'look/XML/path', 'n:look/n:xml', 'path.to::Ref', '$doll_r.way' ]
     }
 
+    def 'parse and skip whitespace'() {
+        expect:
+        parse(input) == expected
+
+        where:
+        input                        || expected
+        ' s  == a'                   || eq('s', 'a')
+        ' s0 =null= , s1 =notnull= ' || or(isNull('s0'), notNull('s1'))
+    }
+
     def 'parse quoted selector with any chars: #input'() {
         given:
             def expected = eq(input[1..-2], 'val')
