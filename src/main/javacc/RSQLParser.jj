@@ -83,7 +83,7 @@ PARSER_END(Parser)
 
 
 SKIP : {
-    " " | "\t"
+    " "
 }
 
 TOKEN : {
