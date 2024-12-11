@@ -34,6 +34,10 @@ public final class AndNode extends LogicalNode {
         super(LogicalOperator.AND, children);
     }
 
+    AndNode(List<? extends Node> children, boolean trusted) {
+        super(LogicalOperator.AND, children, trusted);
+    }
+
     public AndNode withChildren(List<? extends Node> children) {
         return new AndNode(children);
     }

@@ -34,6 +34,10 @@ public final class OrNode extends LogicalNode {
         super(LogicalOperator.OR, children);
     }
 
+    OrNode(List<? extends Node> children, boolean trusted) {
+        super(LogicalOperator.OR, children, trusted);
+    }
+
     public OrNode withChildren(List<? extends Node> children) {
         return new OrNode(children);
     }

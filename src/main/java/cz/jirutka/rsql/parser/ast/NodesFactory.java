@@ -110,4 +110,37 @@ public class NodesFactory {
             throw new UnknownOperatorException(operatorToken);
         }
     }
+
+    /**
+     * Invoked from {@code  cz.jirutka.rsql.parser.NodesFactoryAccess#create(NodesFactory, LogicalOperator, List)} via
+     * method handle.
+     */
+    @SuppressWarnings("unused")
+    LogicalNode logicalNodeTrusted(LogicalOperator operator, List<Node> children) {
+        switch (operator) {
+            case AND:
+                return new AndNode(children, true);
+            case OR:
+                return new OrNode(children, true);
+
+            // this normally can't happen
+            default:
+                throw new IllegalStateException("Unknown operator: " + operator);
+        }
+    }
+
+    /**
+     * Invoked from {@code  cz.jirutka.rsql.parser.NodesFactoryAccess#create(NodesFactory, String, String, List)} via
+     * method handle.
+     */
+    @SuppressWarnings("unused")
+    ComparisonNode comparisonNodeTrusted(String operatorToken, String selector, List<String> arguments)
+        throws UnknownOperatorException {
+        ComparisonOperator op = comparisonOperators.get(operatorToken);
+        if (op != null) {
+            return new ComparisonNode(op, selector, arguments, true);
+        } else {
+            throw new UnknownOperatorException(operatorToken);
+        }
+    }
 }
