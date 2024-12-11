@@ -30,3 +30,4 @@ jobs:
         if: matrix.java-version == 8
         with:
           verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
