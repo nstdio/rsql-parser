@@ -6,7 +6,7 @@ plugins {
   signing
   id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
   id("org.javacc.javacc") version "3.0.3"
-  id("net.researchgate.release") version "3.0.2"
+  id("net.researchgate.release") version "3.1.0"
 }
 
 repositories {
