@@ -21,7 +21,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
 
-  testImplementation("org.spockframework:spock-core:2.4-M4-groovy-4.0")
+  testImplementation("org.spockframework:spock-core:2.4-M5-groovy-4.0")
 
   javacc("net.java.dev.javacc:javacc:7.0.13")
 }
