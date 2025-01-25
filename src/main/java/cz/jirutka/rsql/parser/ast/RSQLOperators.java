@@ -29,7 +29,7 @@ import java.util.Set;
 
 import static java.util.Arrays.asList;
 
-public abstract class RSQLOperators {
+public final class RSQLOperators {
 
     public static final ComparisonOperator
             EQUAL = new ComparisonOperator("==", Arity.nary(1)),
@@ -43,6 +43,8 @@ public abstract class RSQLOperators {
             IS_NULL = new ComparisonOperator("=null=", Arity.nary(0)),
             NOT_NULL = new ComparisonOperator("=notnull=", Arity.nary(0));
 
+    private RSQLOperators() {
+    }
 
     public static Set<ComparisonOperator> defaultOperators() {
         return new HashSet<>(asList(EQUAL, NOT_EQUAL, GREATER_THAN, GREATER_THAN_OR_EQUAL,

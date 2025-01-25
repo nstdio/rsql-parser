@@ -26,7 +26,10 @@ package cz.jirutka.rsql.parser.ast;
 import java.util.List;
 import java.util.StringJoiner;
 
-abstract class StringUtils {
+final class StringUtils {
+
+    private StringUtils() {
+    }
 
     public static String join(List<?> list, String delimiter, String prefix, String suffix) {
         return join(list, delimiter, prefix, suffix, null);
