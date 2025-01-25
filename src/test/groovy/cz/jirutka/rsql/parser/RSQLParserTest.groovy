@@ -128,9 +128,11 @@ class RSQLParserTest extends Specification {
 
     def 'throw exception for empty selector'() {
         when:
-            parse("==val")
+            parse("$sel==val")
         then:
             thrown RSQLParserException
+        where:
+            sel << ['', ' ', '""', '" "', "''", "' '"]
     }
 
 
