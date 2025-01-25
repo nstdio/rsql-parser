@@ -25,7 +25,10 @@ package cz.jirutka.rsql.parser.ast;
 
 import java.util.Collection;
 
-abstract class Assert {
+final class Assert {
+
+    private Assert() {
+    }
 
     public static void isTrue(boolean expression, String message, Object... args) {
         if (!expression) {
