@@ -275,6 +275,7 @@ class RSQLParserTest extends Specification {
         then:
             def ex = thrown(RSQLParserException)
             ex.cause instanceof UnknownOperatorException
+            (ex.cause as UnknownOperatorException).operator == '=ge='
     }
 
     def 'use parser with custom set of operators 2'() {
