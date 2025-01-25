@@ -163,6 +163,18 @@ class RSQLParserTest extends Specification {
             input << [ '"hi there!"', "'Pěkný den!'", '"Flynn\'s *"', '"o)\'O\'(o"', '"6*7=42"' ]
     }
 
+    def 'parse empty quoted argument'() {
+        expect:
+            parse(input) == expected
+        where:
+            input               | expected
+            'sel==""'           | eq('sel', '')
+            "sel==''"           | eq('sel', '')
+            "sel=in=''"         | 'in'('sel', '')
+            'sel=in=""'         | 'in'('sel', '')
+            "sel=in=('','','')" | 'in'('sel', '', '', '')
+            'sel=in=("","","")' | 'in'('sel', '', '', '')
+    }
 
     def 'parse escaped single quoted argument: #input'() {
         expect:
