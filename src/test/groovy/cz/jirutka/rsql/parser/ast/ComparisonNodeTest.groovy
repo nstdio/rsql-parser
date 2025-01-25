@@ -132,6 +132,18 @@ class ComparisonNodeTest extends Specification {
         new ComparisonOperator('=e=', Arity.of(2, 6)) | ['a']      | "operator '=e=' can have from 2 to 6 argument(s), but got 1"
     }
 
+    def 'should throw exception when selector is blank'() {
+        when:
+        new ComparisonNode(EQUAL, sel, ['any'])
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message == 'selector must not be blank'
+
+        where:
+        sel << ['', ' ', '\t', '\n', '\r', '\u001C', '\u001D', '\u001E', '\u001F']
+    }
+
     def 'should honor equal and hashcode contracts'() {
         expect:
         EqualsVerifier.forClass(ComparisonNode)
