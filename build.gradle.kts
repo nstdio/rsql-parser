@@ -1,7 +1,10 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
   groovy
   jacoco
   `java-library`
+  `jvm-test-suite`
   `maven-publish`
   signing
   id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
@@ -13,22 +16,6 @@ repositories {
   mavenCentral()
 }
 
-dependencies {
-  compileOnly("net.jcip:jcip-annotations:1.0")
-
-  testImplementation("nl.jqno.equalsverifier:equalsverifier:3.18.1")
-
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
-
-  testImplementation("org.spockframework:spock-core:2.4-M5-groovy-4.0")
-
-  javacc("net.java.dev.javacc:javacc:7.0.13")
-}
-
-group = "io.github.nstdio"
-description = "RSQL-parser"
-
 java {
   withSourcesJar()
   withJavadocJar()
@@ -36,13 +23,52 @@ java {
   toolchain {
     languageVersion.set(JavaLanguageVersion.of(8))
   }
+}
 
-  sourceSets {
-    main {
-      java.srcDirs(project.layout.buildDirectory.dir("generated/javacc"))
+sourceSets {
+  main {
+    java.srcDirs(project.layout.buildDirectory.dir("generated/javacc"))
+  }
+}
+
+testing {
+  suites {
+    val test by getting(JvmTestSuite::class) {
+      useJUnitJupiter("5.11.4")
+
+      dependencies {
+        implementation("nl.jqno.equalsverifier:equalsverifier:3.18.1")
+        implementation("org.spockframework:spock-core:2.4-M5-groovy-4.0")
+      }
+    }
+
+    register<JvmTestSuite>("fuzzTest") {
+      dependencies {
+        implementation(project())
+        implementation("junit:junit:4.13.2")
+        implementation("edu.berkeley.cs.jqf:jqf-fuzz:2.0")
+        runtimeOnly("org.junit.vintage:junit-vintage-engine:5.11.4")
+      }
+
+      targets {
+        all {
+          testTask.configure {
+            shouldRunAfter(test)
+          }
+        }
+      }
     }
   }
 }
+
+dependencies {
+  compileOnly("net.jcip:jcip-annotations:1.0")
+
+  javacc("net.java.dev.javacc:javacc:7.0.13")
+}
+
+group = "io.github.nstdio"
+description = "RSQL-parser"
 
 publishing {
   publications.create<MavenPublication>("java") {
@@ -166,4 +192,20 @@ tasks {
   named("afterReleaseBuild") {
     dependsOn("publishToSonatype", "closeAndReleaseSonatypeStagingRepository")
   }
+
+  named("check") {
+    dependsOn(testing.suites.named("fuzzTest"))
+  }
+}
+
+tasks.named<JavaCompile>("compileFuzzTestJava") {
+  javaCompiler.set(javaToolchains.compilerFor {
+    languageVersion.set(JavaLanguageVersion.of(21))
+  })
+}
+
+tasks.named<Test>("fuzzTest") {
+  javaLauncher.set(javaToolchains.launcherFor {
+    languageVersion.set(JavaLanguageVersion.of(21))
+  })
 }
