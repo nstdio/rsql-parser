@@ -37,7 +37,7 @@ testing {
       useJUnitJupiter("5.11.4")
 
       dependencies {
-        implementation("nl.jqno.equalsverifier:equalsverifier:3.18.2")
+        implementation("nl.jqno.equalsverifier:equalsverifier:3.19")
         implementation("org.spockframework:spock-core:2.4-M5-groovy-4.0")
       }
     }
