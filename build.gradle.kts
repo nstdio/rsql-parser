@@ -38,7 +38,7 @@ testing {
 
       dependencies {
         implementation("nl.jqno.equalsverifier:equalsverifier:3.19.3")
-        implementation("org.spockframework:spock-core:2.4-M5-groovy-4.0")
+        implementation("org.spockframework:spock-core:2.4-M6-groovy-4.0")
       }
     }
 
