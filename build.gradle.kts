@@ -20,8 +20,12 @@ java {
   withSourcesJar()
   withJavadocJar()
 
-  toolchain {
-    languageVersion.set(JavaLanguageVersion.of(8))
+  val useToolchain = System.getenv("RSQL_PARSER_GRADLE_USE_TOOLCHAIN")?.toBoolean() ?: true
+
+  if (useToolchain) {
+    toolchain {
+      languageVersion.set(JavaLanguageVersion.of(8))
+    }
   }
 }
 
@@ -200,12 +204,12 @@ tasks {
 
 tasks.named<JavaCompile>("compileFuzzTestJava") {
   javaCompiler.set(javaToolchains.compilerFor {
-    languageVersion.set(JavaLanguageVersion.of(21))
+    languageVersion.set(JavaLanguageVersion.of(24))
   })
 }
 
 tasks.named<Test>("fuzzTest") {
   javaLauncher.set(javaToolchains.launcherFor {
-    languageVersion.set(JavaLanguageVersion.of(21))
+    languageVersion.set(JavaLanguageVersion.of(24))
   })
 }
