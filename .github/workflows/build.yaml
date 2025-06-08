@@ -26,6 +26,8 @@ jobs:
           java-version: ${{ matrix.java-version }}
           cache: 'gradle'
       - name: Build
+        env:
+          RSQL_PARSER_GRADLE_USE_TOOLCHAIN: false
         run: ./gradlew build
       - uses: codecov/codecov-action@v5
         if: matrix.java-version == 8
