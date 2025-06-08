@@ -29,7 +29,7 @@ package cz.jirutka.rsql.parser.ast;
 public interface Node {
 
     /**
-     * Accepts the visitor, calls its <tt>visit()</tt> method and returns a result.
+     * Accepts the visitor, calls its {@code visit()} method and returns a result.
      *
      * <p>Each implementation must implement this methods exactly as listed:
      * <pre>{@code
@@ -42,20 +42,20 @@ public interface Node {
      * @param param An optional parameter to pass to the visitor.
      * @param <R> Return type of the visitor's method.
      * @param <A> Type of an optional parameter passed to the visitor's method.
-     * @return An object returned by the visitor (may be <tt>null</tt>).
+     * @return An object returned by the visitor (may be {@code null}).
      */
     <R, A> R accept(RSQLVisitor<R, A> visitor, A param);
 
     /**
-     * Accepts the visitor, calls its <tt>visit()</tt> method and returns the result.
+     * Accepts the visitor, calls its {@code visit()} method and returns the result.
      * <p>
      * This method should just call {@link #accept(RSQLVisitor, Object)} with
-     * <tt>null</tt> as the second argument.
+     * {@code null} as the second argument.
      *
      * @param visitor The visitor whose appropriate method will be called.
      * @param <R>     Return type of the visitor's method.
      * @param <A>     Type of an optional parameter passed to the visitor's method.
-     * @return An object returned by the visitor (may be <tt>null</tt>).
+     * @return An object returned by the visitor (may be {@code null}).
      */
     <R, A> R accept(RSQLVisitor<R, A> visitor);
 }

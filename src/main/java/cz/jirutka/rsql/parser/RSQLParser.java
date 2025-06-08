@@ -87,7 +87,7 @@ public final class RSQLParser {
      * Creates a new instance of {@code RSQLParser} that supports only the specified comparison
      * operators.
      *
-     * @param operators A set of supported comparison operators. Must not be <tt>null</tt> or empty.
+     * @param operators A set of supported comparison operators. Must not be {@code null} or empty.
      */
     public RSQLParser(Set<ComparisonOperator> operators) {
        this(new NodesFactory(operators));
@@ -96,7 +96,7 @@ public final class RSQLParser {
     /**
      * Creates a new instance of {@code RSQLParser} with given node factory.
      *
-     * @param nodesFactory A node factory to use. Must not be <tt>null</tt>.
+     * @param nodesFactory A node factory to use. Must not be {@code null}.
      */
     public RSQLParser(NodesFactory nodesFactory) {
         if (nodesFactory == null) {
@@ -114,7 +114,7 @@ public final class RSQLParser {
      *
      * @throws RSQLParserException If some exception occurred during parsing, i.e. the
      *          {@code query} is syntactically invalid.
-     * @throws IllegalArgumentException If the {@code query} is <tt>null</tt>.
+     * @throws IllegalArgumentException If the {@code query} is {@code null}.
      */
     public Node parse(String query) throws RSQLParserException {
         if (query == null) {

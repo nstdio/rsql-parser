@@ -40,12 +40,12 @@ public final class ComparisonOperator {
     private final Arity arity;
 
     /**
-     * @param symbols    Textual representation of this operator (e.g. <tt>=gt=</tt>); the first item
+     * @param symbols    Textual representation of this operator (e.g. {@code =gt=}); the first item
      *                   is primary representation, any others are alternatives. Must match
      *                   {@literal =[a-zA-Z]*=|[><]=?|!=}.
      * @param multiValue Whether this operator may be used with multiple arguments. This is then
      *                   validated in {@link NodesFactory}.
-     * @throws IllegalArgumentException If the {@code symbols} is either <tt>null</tt>, empty,
+     * @throws IllegalArgumentException If the {@code symbols} is either {@code null}, empty,
      *                                  or contain illegal symbols.
      * @see #ComparisonOperator(String[], Arity)
      * @deprecated in favor of {@linkplain #ComparisonOperator(String[], Arity)}
@@ -56,10 +56,10 @@ public final class ComparisonOperator {
     }
 
     /**
-     * @param symbols  Textual representation of this operator (e.g. <tt>=gt=</tt>); the first item is primary
+     * @param symbols  Textual representation of this operator (e.g. {@code =gt=}); the first item is primary
      *                 representation, any others are alternatives. Must match {@literal =[a-zA-Z]*=|[><]=?|!=}.
      * @param arity    Arity of this operator.
-     * @throws IllegalArgumentException If the {@code symbols} is either <tt>null</tt>, empty, or contain illegal
+     * @throws IllegalArgumentException If the {@code symbols} is either {@code null}, empty, or contain illegal
      *                                  symbols.
      * @since 2.3.0
      */
@@ -75,7 +75,7 @@ public final class ComparisonOperator {
     }
 
     /**
-     * @param symbol     Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
+     * @param symbol     Textual representation of this operator (e.g. {@code =gt=}); Must match
      *                   {@literal =[a-zA-Z]*=|[><]=?|!=}.
      * @param multiValue Whether this operator may be used with multiple arguments. This is then
      *                   validated in {@link NodesFactory}.
@@ -88,7 +88,7 @@ public final class ComparisonOperator {
     }
 
     /**
-     * @param symbol Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
+     * @param symbol Textual representation of this operator (e.g. {@code =gt=}); Must match
      *               {@literal =[a-zA-Z]*=|[><]=?|!=}.
      * @param arity  Arity of this operator.
      * @see #ComparisonOperator(String[], boolean)
@@ -99,7 +99,7 @@ public final class ComparisonOperator {
     }
 
     /**
-     * @param symbol     Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
+     * @param symbol     Textual representation of this operator (e.g. {@code =gt=}); Must match
      *                   {@literal =[a-zA-Z]*=|[><]=?|!=}.
      * @param altSymbol  Alternative representation for {@code symbol}.
      * @param multiValue Whether this operator may be used with multiple arguments. This is then
@@ -111,7 +111,7 @@ public final class ComparisonOperator {
     }
 
     /**
-     * @param symbol    Textual representation of this operator (e.g. <tt>=gt=</tt>); Must match
+     * @param symbol    Textual representation of this operator (e.g. {@code =gt=}); Must match
      *                  {@literal =[a-zA-Z]*=|[><]=?|!=}.
      * @param altSymbol Alternative representation for {@code symbol}.
      * @param arity     Arity of this operator.
@@ -123,7 +123,7 @@ public final class ComparisonOperator {
     }
 
     /**
-     * @param symbols Textual representation of this operator (e.g. <tt>=gt=</tt>); the first item
+     * @param symbols Textual representation of this operator (e.g. {@code =gt=}); the first item
      *                is primary representation, any others are alternatives. Must match {@literal =[a-zA-Z]*=|[><]=?|!=}.
      * @see #ComparisonOperator(String[], boolean)
      */

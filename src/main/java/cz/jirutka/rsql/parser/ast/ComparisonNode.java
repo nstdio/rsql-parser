@@ -32,7 +32,7 @@ import net.jcip.annotations.Immutable;
 
 /**
  * This node represents a comparison with operator, selector and arguments,
- * e.g. <tt>name=in=(Jimmy,James)</tt>.
+ * e.g. {@code name=in=(Jimmy,James)}.
  */
 @Immutable
 public final class ComparisonNode extends AbstractNode {
@@ -44,9 +44,9 @@ public final class ComparisonNode extends AbstractNode {
     private final List<String> arguments;
 
     /**
-     * @param operator  Must not be <tt>null</tt>.
-     * @param selector  Must not be <tt>null</tt> or blank.
-     * @param arguments Must not be <tt>null</tt> or empty. If the operator is not
+     * @param operator  Must not be {@code null}.
+     * @param selector  Must not be {@code null} or blank.
+     * @param arguments Must not be {@code null} or empty. If the operator is not
      *                  {@link ComparisonOperator#isMultiValue() multiValue}, then it must contain exactly
      *                  one argument.
      * @throws IllegalArgumentException If one of the conditions specified above it not met.
@@ -78,7 +78,7 @@ public final class ComparisonNode extends AbstractNode {
     /**
      * Returns a copy of this node with the specified operator.
      *
-     * @param newOperator Must not be <tt>null</tt>.
+     * @param newOperator Must not be {@code null}.
      * @return a copy of this node with the specified operator.
      */
     public ComparisonNode withOperator(ComparisonOperator newOperator) {
@@ -92,7 +92,7 @@ public final class ComparisonNode extends AbstractNode {
     /**
      * Returns a copy of this node with the specified selector.
      *
-     * @param newSelector Must not be <tt>null</tt> or blank.
+     * @param newSelector Must not be {@code null} or blank.
      * @return a copy of this node with the specified selector.
      */
     public ComparisonNode withSelector(String newSelector) {
@@ -115,7 +115,7 @@ public final class ComparisonNode extends AbstractNode {
     /**
      * Returns a copy of this node with the specified arguments.
      *
-     * @param newArguments Must not be <tt>null</tt> or empty. If the operator is not
+     * @param newArguments Must not be {@code null} or empty. If the operator is not
      *                     {@link ComparisonOperator#isMultiValue() multiValue}, then it must contain exactly
      *                     one argument.
      * @return a copy of this node with the specified arguments.
