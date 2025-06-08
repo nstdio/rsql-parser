@@ -34,7 +34,7 @@ sourceSets {
 testing {
   suites {
     val test by getting(JvmTestSuite::class) {
-      useJUnitJupiter("5.11.4")
+      useJUnitJupiter("5.13.1")
 
       dependencies {
         implementation("nl.jqno.equalsverifier:equalsverifier:3.19.3")
