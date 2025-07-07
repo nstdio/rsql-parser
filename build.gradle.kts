@@ -51,7 +51,7 @@ testing {
         implementation(project())
         implementation("junit:junit:4.13.2")
         implementation("edu.berkeley.cs.jqf:jqf-fuzz:2.1")
-        runtimeOnly("org.junit.vintage:junit-vintage-engine:5.13.1")
+        runtimeOnly("org.junit.vintage:junit-vintage-engine:5.13.3")
       }
 
       targets {
