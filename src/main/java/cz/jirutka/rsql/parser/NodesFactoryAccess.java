@@ -75,7 +75,7 @@ final class NodesFactoryAccess {
     }
 
     static LogicalNode create(NodesFactory factory, LogicalOperator operator, List<Node> children) {
-        if (LOGICAL_NODE_MH == null) {
+        if (LOGICAL_NODE_MH == null || factory.getClass() != NodesFactory.class) {
             return factory.createLogicalNode(operator, children);
         } else {
             try {
@@ -92,7 +92,7 @@ final class NodesFactoryAccess {
 
     static ComparisonNode create(NodesFactory factory, String operatorToken, String selector, List<String> arguments)
         throws UnknownOperatorException {
-        if (COMP_NODE_MH == null) {
+        if (COMP_NODE_MH == null || factory.getClass() != NodesFactory.class) {
             return factory.createComparisonNode(operatorToken, selector, arguments);
         } else {
             try {
