@@ -137,9 +137,8 @@ signing {
 nexusPublishing {
   repositories {
     sonatype {
-      val baseUri = uri("https://s01.oss.sonatype.org")
-      nexusUrl.set(baseUri.resolve("/service/local/"))
-      snapshotRepositoryUrl.set(baseUri.resolve("/content/repositories/snapshots/"))
+      nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
+      snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
     }
   }
 }
