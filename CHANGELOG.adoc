@@ -2,6 +2,9 @@
 :repo-uri: https://github.com/jirutka/rsql-parser
 :issue-uri: {repo-uri}/issues
 
+== 2.3.4 (2025-07-28)
+* Node factory methods are not invoked through `NodesFactoryAccess` when `NodesFactory` is extended.
+
 == 2.3.3 (2024-12-12)
 * Memory optimizations when creating nodes from parser.
 * Remove unnecessary skip term thus bit simplifying generated parser.
