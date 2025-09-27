@@ -132,7 +132,7 @@ Examples of RSQL expressions in both FIQL-like and alternative notation:
 - director.lastName==Nolan and year>=2000 and year<2010
 - genres=in=(sci-fi,action);genres=out=(romance,animated,horror),director==Que*Tarantino
 - genres=in=(sci-fi,action) and genres=out=(romance,animated,horror) or director==Que*Tarantino
-- year=notnull= and director.lastName=isnull=
+- year=notnull= and director.lastName=null=
 ----
 
 == How to use
