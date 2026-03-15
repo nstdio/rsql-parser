@@ -37,8 +37,10 @@ sourceSets {
 
 testing {
   suites {
+    val junitJupiterVersion = "5.14.3"
+
     val test by getting(JvmTestSuite::class) {
-      useJUnitJupiter("5.14.3")
+      useJUnitJupiter(junitJupiterVersion)
 
       dependencies {
         implementation("nl.jqno.equalsverifier:equalsverifier:3.19.4")
@@ -47,11 +49,13 @@ testing {
     }
 
     register<JvmTestSuite>("fuzzTest") {
+      useJUnitJupiter(junitJupiterVersion)
+
       dependencies {
         implementation(project())
         implementation("junit:junit:4.13.2")
         implementation("edu.berkeley.cs.jqf:jqf-fuzz:2.1")
-        runtimeOnly("org.junit.vintage:junit-vintage-engine:6.0.3")
+        runtimeOnly("org.junit.vintage:junit-vintage-engine")
       }
 
       targets {
