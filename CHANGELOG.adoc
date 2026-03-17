@@ -2,6 +2,10 @@
 :repo-uri: https://github.com/jirutka/rsql-parser
 :issue-uri: {repo-uri}/issues
 
+== 2.4.0 (2026-03-17)
+* Visitor to output RSQL nodes as query string.
+* Arity implements equals and hashCode.
+
 == 2.3.4 (2025-07-28)
 * Node factory methods are not invoked through `NodesFactoryAccess` when `NodesFactory` is extended.
 
