@@ -48,6 +48,25 @@ public interface Arity {
     int max();
 
     /**
+     * Compares this object with the specified object for equality. Two objects are considered equal if they represent
+     * the same Arity, meaning their min and max are equal.
+     *
+     * @param o The object to be compared for equality with this object.
+     * @return {@code true} if the specified object is equal to this object; {@code false} otherwise.
+     */
+    @Override
+    boolean equals(Object o);
+
+    /**
+     * Returns the hash code value for this object. The hash code is computed based on the properties of the object and
+     * ensures that equal objects have the same hash code.
+     *
+     * @return The hash code value for this object.
+     */
+    @Override
+    int hashCode();
+
+    /**
      * Creates arity with given {@code min} and {@code max}.
      *
      * @param min The minimum number of arguments. Must be zero or positive.

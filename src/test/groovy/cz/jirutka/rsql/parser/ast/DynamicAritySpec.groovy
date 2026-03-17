@@ -1,5 +1,6 @@
 package cz.jirutka.rsql.parser.ast
 
+import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
 class DynamicAritySpec extends Specification {
@@ -29,5 +30,22 @@ class DynamicAritySpec extends Specification {
         then:
         actual.min() == min
         actual.max() == max
+    }
+
+    def 'Should be equal with n-ary'() {
+        expect:
+        //noinspection GrEqualsBetweenInconvertibleTypes
+        new DynamicArity(0, 0) == new NAry(0)
+    }
+
+    def 'Should not be equal with n-ary'() {
+        expect:
+        //noinspection GrEqualsBetweenInconvertibleTypes
+        new DynamicArity(0, 0) != new NAry(1)
+    }
+
+    def 'Should implement equals and hashCode'() {
+        expect:
+        EqualsVerifier.forClass(DynamicArity).verify()
     }
 }

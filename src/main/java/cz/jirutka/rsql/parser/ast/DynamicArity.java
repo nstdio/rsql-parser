@@ -52,4 +52,19 @@ final class DynamicArity implements Arity {
     public int max() {
         return max;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Arity)) {
+            return false;
+        }
+
+        Arity that = (Arity) o;
+        return min == that.min() && max == that.max();
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(min) + (31 * Integer.hashCode(max));
+    }
 }
