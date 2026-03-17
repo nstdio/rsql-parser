@@ -31,6 +31,27 @@ package cz.jirutka.rsql.parser.ast;
 public interface Arity {
 
     /**
+     * Creates arity with given {@code min} and {@code max}.
+     *
+     * @param min The minimum number of arguments. Must be zero or positive.
+     * @param max The maximum number of arguments. Must be zero or positive and greater than or equal to {@code min}.
+     * @return the created arity
+     */
+    static Arity of(int min, int max) {
+        return min == max ? nary(min) : new DynamicArity(min, max);
+    }
+
+    /**
+     * Creates N-ary object.
+     *
+     * @param n The N.
+     * @return the created arity
+     */
+    static Arity nary(int n) {
+        return new NAry(n);
+    }
+
+    /**
      * The minimum number of arguments operator can receive.
      *
      * @return The minimum number of arguments operator can receive. Positive or zero.
@@ -65,25 +86,4 @@ public interface Arity {
      */
     @Override
     int hashCode();
-
-    /**
-     * Creates arity with given {@code min} and {@code max}.
-     *
-     * @param min The minimum number of arguments. Must be zero or positive.
-     * @param max The maximum number of arguments. Must be zero or positive and greater than or equal to {@code min}.
-     * @return the created arity
-     */
-    static Arity of(int min, int max) {
-        return min == max ? nary(min) : new DynamicArity(min, max);
-    }
-
-    /**
-     * Creates N-ary object.
-     *
-     * @param n The N.
-     * @return the created arity
-     */
-    static Arity nary(int n) {
-        return new NAry(n);
-    }
 }
