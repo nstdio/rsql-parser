@@ -55,20 +55,15 @@ final class NodesFactoryAccess {
     }
 
     private static MethodHandle methodHandle(Lookup lookup, String name, Class<?>... parameterTypes) {
-        Method m = null;
         MethodHandle mh = null;
 
         try {
-            m = NodesFactory.class.getDeclaredMethod(name, parameterTypes);
+            Method m = NodesFactory.class.getDeclaredMethod(name, parameterTypes);
             m.setAccessible(true);
 
             mh = lookup.unreflect(m);
         } catch (Throwable e) {
             logger().log(WARNING, "Unable to initialize MethodHandle for {0}", new Object[]{name, e});
-        } finally {
-            if (m != null) {
-                m.setAccessible(false);
-            }
         }
 
         return mh;
