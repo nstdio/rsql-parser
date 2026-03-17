@@ -39,19 +39,17 @@ import java.util.logging.Logger;
 
 final class NodesFactoryAccess {
 
-    private NodesFactoryAccess() {
-    }
-
     private static final MethodHandle LOGICAL_NODE_MH;
     private static final MethodHandle COMP_NODE_MH;
 
     static {
         Lookup lookup = MethodHandles.lookup();
 
-        LOGICAL_NODE_MH = methodHandle(lookup, "logicalNodeTrusted", LogicalOperator.class,
-            List.class);
-        COMP_NODE_MH = methodHandle(lookup, "comparisonNodeTrusted", String.class, String.class,
-            List.class);
+        LOGICAL_NODE_MH = methodHandle(lookup, "logicalNodeTrusted", LogicalOperator.class, List.class);
+        COMP_NODE_MH = methodHandle(lookup, "comparisonNodeTrusted", String.class, String.class, List.class);
+    }
+
+    private NodesFactoryAccess() {
     }
 
     private static MethodHandle methodHandle(Lookup lookup, String name, Class<?>... parameterTypes) {
