@@ -42,7 +42,7 @@ public interface Arity {
     }
 
     /**
-     * Creates N-ary object.
+     * Creates an N-ary object.
      *
      * @param n The N.
      * @return the created arity
@@ -52,18 +52,18 @@ public interface Arity {
     }
 
     /**
-     * The minimum number of arguments operator can receive.
+     * The minimum number of arguments an operator can receive.
      *
-     * @return The minimum number of arguments operator can receive. Positive or zero.
+     * @return The minimum number of arguments an operator can receive. Positive or zero.
      * @apiNote The minimum values is always less than or equal to {@linkplain #max()}
      */
     int min();
 
     /**
-     * The maximum number of arguments operator can receive.
+     * The maximum number of arguments an operator can receive.
      *
-     * @return The maximum number of arguments operator can receive. Positive or zero.
-     * @apiNote The maximum values is always greater than or equal to {@linkplain #min()}. For practically unlimited
+     * @return The maximum number of arguments an operator can receive. Positive or zero.
+     * @apiNote The maximum value is always greater than or equal to {@linkplain #min()}. For practically unlimited
      *     arity the implementations should return {@link Integer#MAX_VALUE}.
      */
     int max();
