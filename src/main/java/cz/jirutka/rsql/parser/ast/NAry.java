@@ -44,4 +44,19 @@ final class NAry implements Arity {
     public int max() {
         return n;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Arity)) {
+            return false;
+        }
+
+        Arity that = (Arity) o;
+        return n == that.min() && n == that.max();
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(n);
+    }
 }
