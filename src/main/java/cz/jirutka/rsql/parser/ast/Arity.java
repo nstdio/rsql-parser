@@ -55,7 +55,7 @@ public interface Arity {
      * @return the created arity
      */
     static Arity of(int min, int max) {
-        return new DynamicArity(min, max);
+        return min == max ? nary(min) : new DynamicArity(min, max);
     }
 
     /**
