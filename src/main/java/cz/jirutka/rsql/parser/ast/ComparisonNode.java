@@ -112,6 +112,10 @@ public final class ComparisonNode extends AbstractNode {
         return new ArrayList<>(arguments);
     }
 
+    List<String> arguments() {
+        return arguments;
+    }
+
     /**
      * Returns a copy of this node with the specified arguments.
      *

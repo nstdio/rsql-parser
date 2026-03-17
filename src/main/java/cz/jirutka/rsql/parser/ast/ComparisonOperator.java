@@ -151,6 +151,10 @@ public final class ComparisonOperator {
         return symbols.clone();
     }
 
+    String symbol(int index) {
+        return symbols[index];
+    }
+
     /**
      * Whether this operator may be used with multiple arguments.
      *
