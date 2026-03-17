@@ -55,18 +55,16 @@ final class NodesFactoryAccess {
     }
 
     private static MethodHandle methodHandle(Lookup lookup, String name, Class<?>... parameterTypes) {
-        MethodHandle mh = null;
-
         try {
             Method m = NodesFactory.class.getDeclaredMethod(name, parameterTypes);
             m.setAccessible(true);
 
-            mh = lookup.unreflect(m);
+            return lookup.unreflect(m);
         } catch (Throwable e) {
             logger().log(WARNING, "Unable to initialize MethodHandle for {0}", new Object[]{name, e});
         }
 
-        return mh;
+        return null;
     }
 
     static LogicalNode create(NodesFactory factory, LogicalOperator operator, List<Node> children) {
