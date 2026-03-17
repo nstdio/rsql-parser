@@ -13,13 +13,14 @@ class NArySpec extends Specification {
     }
 
     def 'Should create instance'() {
-        given:
-        def n = 2
         when:
         def actual = new NAry(n)
 
         then:
         actual.min() == n
         actual.max() == n
+
+        where:
+        n << [0, 1, 2, 32]
     }
 }
