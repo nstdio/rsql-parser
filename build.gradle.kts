@@ -205,14 +205,16 @@ tasks {
   }
 }
 
+val fuzzTestLanguageVersion = JavaLanguageVersion.of(25)
+
 tasks.named<JavaCompile>("compileFuzzTestJava") {
   javaCompiler.set(javaToolchains.compilerFor {
-    languageVersion.set(JavaLanguageVersion.of(24))
+    languageVersion.set(fuzzTestLanguageVersion)
   })
 }
 
 tasks.named<Test>("fuzzTest") {
   javaLauncher.set(javaToolchains.launcherFor {
-    languageVersion.set(JavaLanguageVersion.of(24))
+    languageVersion.set(fuzzTestLanguageVersion)
   })
 }
