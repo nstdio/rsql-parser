@@ -25,16 +25,13 @@
 package cz.jirutka.rsql.parser;
 
 import com.pholser.junit.quickcheck.From;
-import edu.berkeley.cs.jqf.fuzz.Fuzz;
-import edu.berkeley.cs.jqf.fuzz.JQF;
-import org.junit.runner.RunWith;
+import edu.berkeley.cs.jqf.junit5.FuzzTest;
 
-@RunWith(JQF.class)
 public class RSQLParserFuzzTest {
 
-    private final RSQLParser parser = new RSQLParser();
+    private static final RSQLParser parser = new RSQLParser();
 
-    @Fuzz
+    @FuzzTest(maxTrials = 64000, maxDuration = "5m")
     public void testRSQL(@From(RsqlQueryGenerator.class) String query) {
         parser.parse(query);
     }

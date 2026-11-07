@@ -12,6 +12,8 @@ plugins {
   id("net.researchgate.release") version "3.1.0"
 }
 
+val testJavaVersion = System.getenv("RSQL_PARSER_TEST_JAVA_VERSION")?.toIntOrNull()
+
 repositories {
   mavenCentral()
 }
@@ -50,9 +52,8 @@ testing {
 
       dependencies {
         implementation(project())
-        implementation("junit:junit:4.13.2")
-        implementation("edu.berkeley.cs.jqf:jqf-fuzz:2.1")
-        runtimeOnly("org.junit.vintage:junit-vintage-engine")
+        implementation("edu.berkeley.cs.jqf:jqf-junit5:3.0")
+        implementation("edu.berkeley.cs.jqf:jqf-generator-quickcheck:3.0")
       }
 
       targets {
@@ -157,7 +158,7 @@ tasks {
     useJUnitPlatform()
 
     // Run tests on the requested JVM (CI matrix) regardless of the JVM running Gradle.
-    System.getenv("RSQL_PARSER_TEST_JAVA_VERSION")?.toIntOrNull()?.let { testJavaVersion ->
+    testJavaVersion?.let { testJavaVersion ->
       javaLauncher.set(project.javaToolchains.launcherFor {
         languageVersion.set(JavaLanguageVersion.of(testJavaVersion))
       })
@@ -218,6 +219,10 @@ tasks.named<JavaCompile>("compileFuzzTestJava") {
 }
 
 tasks.named<Test>("fuzzTest") {
+  // Running fuzz tests in every CI matrix entry is redundant.
+  enabled = testJavaVersion == fuzzTestLanguageVersion.asInt()
+  systemProperty("jqf.fuzz", "true")
+
   javaLauncher.set(javaToolchains.launcherFor {
     languageVersion.set(fuzzTestLanguageVersion)
   })
