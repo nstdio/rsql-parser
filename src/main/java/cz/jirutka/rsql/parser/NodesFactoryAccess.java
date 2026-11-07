@@ -33,6 +33,7 @@ import cz.jirutka.rsql.parser.ast.NodesFactory;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.logging.Logger;
@@ -45,19 +46,25 @@ final class NodesFactoryAccess {
     static {
         Lookup lookup = MethodHandles.lookup();
 
-        LOGICAL_NODE_MH = methodHandle(lookup, "logicalNodeTrusted", LogicalOperator.class, List.class);
-        COMP_NODE_MH = methodHandle(lookup, "comparisonNodeTrusted", String.class, String.class, List.class);
+        LOGICAL_NODE_MH = methodHandle(lookup, "logicalNodeTrusted", LogicalNode.class, LogicalOperator.class,
+            List.class);
+        COMP_NODE_MH = methodHandle(lookup, "comparisonNodeTrusted", ComparisonNode.class, String.class, String.class,
+            List.class);
     }
 
     private NodesFactoryAccess() {
     }
 
-    private static MethodHandle methodHandle(Lookup lookup, String name, Class<?>... parameterTypes) {
+    private static MethodHandle methodHandle(Lookup lookup, String name, Class<?> returnType,
+        Class<?>... parameterTypes) {
         try {
             Method m = NodesFactory.class.getDeclaredMethod(name, parameterTypes);
             m.setAccessible(true);
 
-            return lookup.unreflect(m);
+            MethodType exact = MethodType.methodType(returnType, parameterTypes)
+                .insertParameterTypes(0, NodesFactory.class);
+
+            return lookup.unreflect(m).asType(exact);
         } catch (Throwable e) {
             logger().log(WARNING, "Unable to initialize MethodHandle for {0}", new Object[]{name, e});
         }
@@ -70,7 +77,7 @@ final class NodesFactoryAccess {
             return factory.createLogicalNode(operator, children);
         } else {
             try {
-                return (LogicalNode) LOGICAL_NODE_MH.invoke(factory, operator, children);
+                return (LogicalNode) LOGICAL_NODE_MH.invokeExact(factory, operator, children);
             } catch (RuntimeException e) {
                 throw e;
             } catch (Throwable e) {
@@ -87,7 +94,7 @@ final class NodesFactoryAccess {
             return factory.createComparisonNode(operatorToken, selector, arguments);
         } else {
             try {
-                return (ComparisonNode) COMP_NODE_MH.invoke(factory, operatorToken, selector, arguments);
+                return (ComparisonNode) COMP_NODE_MH.invokeExact(factory, operatorToken, selector, arguments);
             } catch (RuntimeException | UnknownOperatorException e) {
                 throw e;
             } catch (Throwable e) {
