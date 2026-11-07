@@ -20,12 +20,9 @@ java {
   withSourcesJar()
   withJavadocJar()
 
-  val useToolchain = System.getenv("RSQL_PARSER_GRADLE_USE_TOOLCHAIN")?.toBoolean() ?: true
-
-  if (useToolchain) {
-    toolchain {
-      languageVersion.set(JavaLanguageVersion.of(8))
-    }
+  // Gradle 9 itself requires Java 17+, so sources are always compiled by a Java 8 toolchain.
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(8))
   }
 }
 
@@ -39,7 +36,7 @@ testing {
   suites {
     val junitJupiterVersion = "5.14.3"
 
-    val test by getting(JvmTestSuite::class) {
+    val test =  getByName<JvmTestSuite>("test") {
       useJUnitJupiter(junitJupiterVersion)
 
       dependencies {
@@ -158,6 +155,13 @@ release {
 tasks {
   test {
     useJUnitPlatform()
+
+    // Run tests on the requested JVM (CI matrix) regardless of the JVM running Gradle.
+    System.getenv("RSQL_PARSER_TEST_JAVA_VERSION")?.toIntOrNull()?.let { testJavaVersion ->
+      javaLauncher.set(project.javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(testJavaVersion))
+      })
+    }
   }
 
   withType<JacocoReport> {
